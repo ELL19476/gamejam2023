@@ -40,20 +40,18 @@ public class Player : Mover
             return _state;
         }
         set {
+            if(value == _state)
+                return;
+
             _state = value;
             gravityScale = originalGravity;
             fastFalling = false;
             slowJump = false;
             ballEnabled = false;
             inputBuffer = KeyCode.None;
-            switch(value) {
-                case PlayerState.Baby:
-                    break;
-                case PlayerState.Teen:
-                    break;
-                case PlayerState.Old:
-                    break;
-            }
+
+            Visuals.instance.EndSpecial();
+            Visuals.instance.age = (Visuals.Age)value;
         }
     }
     PlayerState _state;
@@ -62,6 +60,9 @@ public class Player : Mover
     float originalGravity = 1f;
     bool fastFalling = false;
     bool slowJump = false;
+    bool afterApex;
+    bool isJumping = false;
+
 
     float lastGroundedTime = 0f;
     KeyCode inputBuffer; 
@@ -133,7 +134,22 @@ public class Player : Mover
             dir = h > 0 ? 1 : -1;
         }
         if(!ballEnabled) {
-            MoveTowards(transform.position + Vector3.right * dir);
+            if(MoveTowards(transform.position + Vector3.right * dir)) {
+                Visuals.instance.SetSpeed(Mathf.Abs(h));
+            } else {
+                Visuals.instance.SetSpeed(0);
+                Debug.Log("STOP MOVE!");
+            }
+        }
+
+        if(isJumping && !afterApex && Vector3.Dot(accumulatedVel, Vector3.up) < 0) {
+            afterApex = true;
+            Visuals.instance.EndSpecial();
+        }
+        if(isJumping && afterApex && IsGrounded(out _)) {
+            afterApex = false;
+            isJumping = false;
+            Visuals.instance.Land();
         }
 
         SpecialAction(bufferedInput);
@@ -150,12 +166,12 @@ public class Player : Mover
                     gravityScale *= slowJumpFactor;
                     slowJump = true;
                 }
-            } else if(slowJump && (Input.GetKeyUp(KeyCode.Space) || Vector3.Dot(accumulatedVel, Vector3.up) < 0)) {
+            } else if(slowJump && (Input.GetKeyUp(KeyCode.Space) || afterApex)) {
                 gravityScale = originalGravity;
                 slowJump = false;
             }
             // Slam down
-            if(!fastFalling && Input.GetAxisRaw("Vertical") < 0 && Vector3.Dot(accumulatedVel, Vector3.up) < 0) {
+            if(!fastFalling && Input.GetAxisRaw("Vertical") < 0 && afterApex) {
                 gravityScale *= fastFallFactor;
                 fastFalling = true;
             } else if(fastFalling && Input.GetAxisRaw("Vertical") >= 0) {
@@ -181,6 +197,7 @@ public class Player : Mover
         capsule.enabled = !enable;
         ballCollider.enabled = enable;
         if(!enable) {
+            Visuals.instance.EndSpecial();
             rigidBody.mass = normalMass;
             if(IsGrounded(out _)) {
                 rigidBody.MoveRotation(Quaternion.LookRotation(Vector3.up));
@@ -188,6 +205,7 @@ public class Player : Mover
             }
         }
         else {
+            Visuals.instance.Special();
             rigidBody.mass = ballMass;
             if(IsGrounded(out Vector3 dist)) {
                 Vector3 tangent = Vector3.Cross(dist.normalized, Vector3.forward);
@@ -214,6 +232,8 @@ public class Player : Mover
 
     protected override void Jump() {
         if(Time.time - lastGroundedTime < coyoteTime) {
+            isJumping = true;
+            Visuals.instance.Special();
             base.Jump();
         } else {
             // Buffer jump
@@ -224,6 +244,7 @@ public class Player : Mover
     protected virtual void Attack() {
         // Attack
         // 1. stop walking
+        Visuals.instance.Special();
         attack = true;
         // 2. Hitbox Query
         Collider[] cols = Physics.OverlapBox(transform.TransformPoint(attackCollider.center), attackCollider.size * 0.5f, transform.rotation);

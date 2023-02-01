@@ -93,17 +93,17 @@ public class Visuals : MonoBehaviour
 
     public void SetSpeed(float speed) {
 
-        switch (age) {
-            case Age.Baby:
-                speed = BABY_SPEED;
-                break;
-            case Age.Teenie:
-                speed = TEENIE_SPEED;
-                break;
-            case Age.Granny:
-                speed = GRANNY_SPEED;
-                break;
-        }
+        // switch (age) {
+        //     case Age.Baby:
+        //         speed = BABY_SPEED;
+        //         break;
+        //     case Age.Teenie:
+        //         speed = TEENIE_SPEED;
+        //         break;
+        //     case Age.Granny:
+        //         speed = GRANNY_SPEED;
+        //         break;
+        // }
 
         foreach (var a in GetComponentsInChildren<Animator>(true)) {
             a.SetFloat("speed", speed);
