@@ -92,6 +92,7 @@ public class Visuals : MonoBehaviour
     }
 
     public void SetSpeed(float speed) {
+
         switch (age) {
             case Age.Baby:
                 speed = BABY_SPEED;
@@ -125,7 +126,6 @@ public class Visuals : MonoBehaviour
             }
         }
     }
-
     public void EndSpecial() {
         foreach (var a in GetComponentsInChildren<Animator>(true)) {
             switch (age) {
