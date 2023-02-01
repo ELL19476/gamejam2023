@@ -222,25 +222,4 @@ public class Visuals : MonoBehaviour
             yield return null;
         }
     }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            Hide(ActiveAnimator());
-        }
-        
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            age = Age.Baby;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            age = Age.Teenie;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            age = Age.Granny;
-        }
-    }
 }
