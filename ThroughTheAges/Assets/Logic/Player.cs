@@ -138,7 +138,6 @@ public class Player : Mover
                 Visuals.instance.SetSpeed(Mathf.Abs(h));
             } else {
                 Visuals.instance.SetSpeed(0);
-                Debug.Log("STOP MOVE!");
             }
         }
 
