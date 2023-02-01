@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Mover : MonoBehaviour
+public class Mover : MonoBehaviour, IDamagable
 {
     protected Rigidbody rigidBody;
     protected CapsuleCollider capsule;
@@ -26,12 +26,25 @@ public class Mover : MonoBehaviour
     protected float maxAirSpeed;
     [SerializeField, Range(0, 1)]
     protected float airControl;
+    [SerializeField, Range(0, 10)]
+    protected float slideSpeedFactor = 1;
 
     protected Vector3 accumulatedVel = Vector3.zero;
     protected Vector3 lastVelocity = Vector3.zero;
 
     bool grounded = false;
     Vector3 lastColDir = Vector3.up;
+
+    // HEALTH
+[   SerializeField]
+    protected float health;
+    public float Health { get => health; set {
+        health = value;
+        if(health <= 0) {
+            EnableRagdoll(true);
+            enabled = false;
+        }
+    } }
 
     protected virtual void Start() {
         rigidBody = GetComponent<Rigidbody>();
@@ -50,7 +63,7 @@ public class Mover : MonoBehaviour
 
         EnableRagdoll(false);
     }
-    protected void EnableRagdoll(bool enable) {
+    protected virtual void EnableRagdoll(bool enable) {
         capsule.enabled = !enable;
         foreach (Rigidbody rb in childBodies) {
             rb.isKinematic = !enable;
@@ -100,7 +113,7 @@ public class Mover : MonoBehaviour
             if(Mathf.Abs(dot) > stoppingDist) {   
                 if(CanMove(normal))
                     // Move towards the target
-                    velocity = direction * speed;
+                    velocity = direction * speed * (slide? slideSpeedFactor : 1f);
                 else {
                     canMove = false;
                 }

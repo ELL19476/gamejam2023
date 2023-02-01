@@ -8,9 +8,9 @@ public class Enemy : Mover
     Vector3 t = Vector3.zero;
     bool moveToTarget = false;
 
+
     protected override void Start() {
         base.Start();
-        SetTarget(transform.position + Vector3.right * 5f);
     }
 
     public void SetTarget(Vector3 target) {

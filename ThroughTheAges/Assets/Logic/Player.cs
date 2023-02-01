@@ -5,15 +5,6 @@ using UnityEngine;
 
 public class Player : Mover
 {
-    float originalGravity = 1f;
-    bool fastFalling = false;
-    bool slowJump = false;
-
-    float lastGroundedTime = 0f;
-
-    // JUMP BUFFERING
-    KeyCode inputBuffer; 
-    float lastInputBufferTime = 0.2f;
 
     [Header("Player Movement")]
     [SerializeField, Range(0, 3)]
@@ -32,7 +23,6 @@ public class Player : Mover
     public float fastFallFactor = 4f;
 
 
-
     [Header("Helpers")]
     [SerializeField]
     protected float coyoteTime = 0.1f;
@@ -44,30 +34,77 @@ public class Player : Mover
         Teen,
         Old
     }
-    // [HideInInspector]
-    [Header("TMP")]
-    public PlayerState state;
+    [HideInInspector]
+    public PlayerState state {
+        get {
+            return _state;
+        }
+        set {
+            _state = value;
+            gravityScale = originalGravity;
+            fastFalling = false;
+            slowJump = false;
+            ballEnabled = false;
+            inputBuffer = KeyCode.None;
+            switch(value) {
+                case PlayerState.Baby:
+                    break;
+                case PlayerState.Teen:
+                    break;
+                case PlayerState.Old:
+                    break;
+            }
+        }
+    }
+    PlayerState _state;
 
+    // JUMP
+    float originalGravity = 1f;
+    bool fastFalling = false;
+    bool slowJump = false;
+
+    float lastGroundedTime = 0f;
+    KeyCode inputBuffer; 
+    float lastInputBufferTime = 0.2f;
+
+    // ROLL
     bool _ball = false;
     bool ballEnabled {
         get {
             return _ball;
         }
         set {
+            if(value == _ball)
+                return;
             _ball = value;
             EnableBall(value);
         }
     }
-    int dir = 1;
-
     protected SphereCollider ballCollider;
     float normalMass = 1f;
+
+    // ATTACK
+    [Header("Attack")]
+    [SerializeField]
+    protected Vector3 localAttackForce;
+    [SerializeField]
+    protected int attackDamage = 1;
+    [SerializeField]
+    protected float attackTime = 0.2f;
+    bool attack = false;
+    BoxCollider attackCollider;
+
+    // Keep track of view direction
+    int dir = 1;
 
     protected override void Start() {
         base.Start();
         ballCollider = GetComponent<SphereCollider>();
         ballEnabled = false;
         normalMass = rigidBody.mass;
+
+        attackCollider = GetComponent<BoxCollider>();
+        attackCollider.enabled = false;
 
         originalGravity = gravityScale;
     }
@@ -83,6 +120,14 @@ public class Player : Mover
     }
 
     protected void DoActions(KeyCode bufferedInput) {
+        // Change state
+        if(Input.GetKeyDown(KeyCode.LeftShift) || bufferedInput == KeyCode.LeftShift) {
+            state = (PlayerState)(((int)state + 1) % 3);
+            if(bufferedInput == KeyCode.LeftShift) {
+                inputBuffer = KeyCode.None;
+            }
+        }
+
         float h = Input.GetAxisRaw("Horizontal");
         if(!ballEnabled && h != 0) {
             dir = h > 0 ? 1 : -1;
@@ -92,17 +137,10 @@ public class Player : Mover
         }
 
         SpecialAction(bufferedInput);
-
-        if(!fastFalling && Input.GetAxisRaw("Vertical") < 0 && Vector3.Dot(accumulatedVel, Vector3.up) < 0) {
-            gravityScale *= fastFallFactor;
-            fastFalling = true;
-        } else if(fastFalling && Input.GetAxisRaw("Vertical") >= 0) {
-            gravityScale = originalGravity;
-            fastFalling = false;
-        }
     }
     protected void SpecialAction(KeyCode bufferedInput) {
         if(state == PlayerState.Teen) {
+            // Jump
             if(Input.GetKeyDown(KeyCode.Space) || bufferedInput == KeyCode.Space) {
                 Jump();
                 if(bufferedInput == KeyCode.Space) {
@@ -116,7 +154,16 @@ public class Player : Mover
                 gravityScale = originalGravity;
                 slowJump = false;
             }
+            // Slam down
+            if(!fastFalling && Input.GetAxisRaw("Vertical") < 0 && Vector3.Dot(accumulatedVel, Vector3.up) < 0) {
+                gravityScale *= fastFallFactor;
+                fastFalling = true;
+            } else if(fastFalling && Input.GetAxisRaw("Vertical") >= 0) {
+                gravityScale = originalGravity;
+                fastFalling = false;
+            }
         } else if(state == PlayerState.Baby) {
+            // Roll
             if(Input.GetKeyDown(KeyCode.Space) || bufferedInput == KeyCode.Space) {
                 ballEnabled = true;
             } 
@@ -124,7 +171,8 @@ public class Player : Mover
                 ballEnabled = false;
             }
         } else if(state == PlayerState.Old) {
-            // Attack
+            if(Input.GetKeyDown(KeyCode.Space) || bufferedInput == KeyCode.Space)
+                Attack();
         }
     }
 
@@ -145,7 +193,7 @@ public class Player : Mover
                 Vector3 tangent = Vector3.Cross(dist.normalized, Vector3.forward);
                 lastVelocity = tangent * dir * speed * ballAcceleration;
             } else {
-                // TODO
+                lastVelocity = Vector3.right * dir * speed * ballAcceleration * airControl;
             }
         }
     }
@@ -174,9 +222,44 @@ public class Player : Mover
             lastInputBufferTime = Time.time;
         }
     }
+    protected virtual void Attack() {
+        // Attack
+        // 1. stop walking
+        attack = true;
+        // 2. Hitbox Query
+        Collider[] cols = Physics.OverlapBox(transform.TransformPoint(attackCollider.center), attackCollider.size * 0.5f, transform.rotation);
+        // 3. Add Force and Damage to hit objects
+        foreach(Collider col in cols) {
+            if(col.gameObject == gameObject || col.transform.parent == transform)
+                continue;
+            Rigidbody rb = col.GetComponent<Rigidbody>();
+            IDamagable health = col.GetComponent<IDamagable>();
+            if(health != null) {
+                health.Health -= attackDamage;
+            }
+            IEnumerator Knockback() {
+                yield return new WaitForSeconds(attackTime);
+                if(rb != null && rb.isKinematic == false) {
+                    rb.AddForce(transform.TransformDirection(localAttackForce), ForceMode.Impulse);
+                }
+            }
+            StartCoroutine(Knockback());
+        }
+        IEnumerator AttackEnd() {
+            yield return new WaitForSeconds(attackTime);
+            attack = false;
+        }
+        StartCoroutine(AttackEnd());
+    }
 
     protected override bool CanMove(Vector3 normal)
     {
-        return Input.GetAxisRaw("Horizontal") != 0;
+        return !attack && Input.GetAxisRaw("Horizontal") != 0;
+    }
+    protected override void EnableRagdoll(bool enable)
+    {
+        if(ballCollider)
+            ballCollider.enabled = !enable;
+        base.EnableRagdoll(enable);
     }
 }
