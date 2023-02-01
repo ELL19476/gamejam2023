@@ -205,7 +205,6 @@ public class Player : Mover
         rigidBody.AddForce(acceleration, ForceMode.Acceleration);
 
         lastVelocity -= lastVelocity * Mathf.Clamp01(ballDrag * Time.fixedDeltaTime);
-        Debug.Log(lastVelocity);
         // additional acceleration
         rigidBody.velocity += lastVelocity;
         // clamp speed
