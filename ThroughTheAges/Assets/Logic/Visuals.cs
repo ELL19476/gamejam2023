@@ -206,6 +206,8 @@ public class Visuals : MonoBehaviour
             armature.localScale = new Vector3(val, val, val);
             yield return null;
         }
+
+        armature.GetComponentInParent<Animator>().enabled = false;
     }
 
     IEnumerator UnFadeEmission(Material mat) {
@@ -223,6 +225,8 @@ public class Visuals : MonoBehaviour
     }
 
     IEnumerator ScaleUp(Transform armature) {
+        armature.GetComponentInParent<Animator>().enabled = true;
+        
         var to = armature.GetComponent<MaxScale>().maxScale;
         
         var from = 0f;
