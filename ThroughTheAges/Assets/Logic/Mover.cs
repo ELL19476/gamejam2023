@@ -147,7 +147,8 @@ public class Mover : MonoBehaviour, IDamagable
 
             }
             // Rotate towards the target
-            rigidBody.MoveRotation(Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation(direction), 3.5f * speed * Time.deltaTime));
+            if(direction != Vector3.zero)
+                rigidBody.MoveRotation(Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation(direction), 3.5f * speed * Time.deltaTime));
             
             lastVelocity = velocity;
             if(!grounded) {
