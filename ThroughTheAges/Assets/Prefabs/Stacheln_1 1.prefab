@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8197475777832811683}
   - component: {fileID: 6208141169349036137}
   - component: {fileID: 4748529180615218411}
+  - component: {fileID: 1898024917}
   m_Layer: 0
   m_Name: Stacheln_1 1
   m_TagString: Untagged
@@ -26,9 +27,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5559486964897982908}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -95,5 +96,17 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.15616684, y: 0.079009935, z: 0.10545072}
+  m_Size: {x: 0.13284895, y: 0.07900994, z: 0.057041943}
   m_Center: {x: -0.0030628815, y: -0.007039815, z: 0.003060922}
+--- !u!114 &1898024917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5559486964897982908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6ace9b637fd241e3ab8b4310c1c7d1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
