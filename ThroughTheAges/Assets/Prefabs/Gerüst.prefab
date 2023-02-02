@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 746590367600915532}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.4475, y: 0.14, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 11.580162, y: 11.580162, z: 11.580162}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3856819324178866249}
   - {fileID: 3268617172616610708}
@@ -96,7 +96,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3268617172616610708}
   - component: {fileID: 4725264780154742911}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Collider (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3856819324178866249}
   - component: {fileID: 7434023843811583599}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
