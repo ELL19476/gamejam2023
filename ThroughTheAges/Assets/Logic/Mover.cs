@@ -54,14 +54,26 @@ public class Mover : MonoBehaviour, IDamagable
             EnableRagdoll(true);
             enabled = false;
             Instantiate(Resources.Load("Prefabs/Blood"), transform.position, Quaternion.identity);
+            if(this as Player != null) {
             var activeCinemachine = FindObjectOfType<Cinemachine.CinemachineBrain>().ActiveVirtualCamera;
+                if(activeCinemachine != null) {
+                    activeCinemachine.Follow = null;
+                }
 
-            if(activeCinemachine != null) {
-                activeCinemachine.Follow = null;
+                AnimationEvents.ShakeScreenEffect();
+                AnimationEvents.ReloadScene();
             }
 
-            AnimationEvents.ShakeScreenEffect();
-            AnimationEvents.ReloadScene();
+            if(this as Enemy != null) {
+                // disable gameobject in children with name "Damage"
+                foreach(Transform child in transform) {
+                    if(child.name == "Damage") {
+                        child.gameObject.SetActive(false);
+                    }
+                }
+                (this as Enemy).enabled = false;
+            }
+
         }
     } }
     protected Action onLand;

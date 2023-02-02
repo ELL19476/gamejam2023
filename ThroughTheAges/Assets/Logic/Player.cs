@@ -340,9 +340,9 @@ public class Player : Mover
         if(ballCollider)
             ballCollider.enabled = !enable;
         
+        if(enable)
         GetComponentsInChildren<Animator>().ToList().ForEach(a => {
-            a.enabled = !enable;
-            a.gameObject.SetActive(!enable);
+            a.enabled = false;
         });
         if(enable)
             Visuals.instance.ActiveAnimator().gameObject.SetActive(true);
