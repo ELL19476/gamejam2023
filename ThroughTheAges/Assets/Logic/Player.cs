@@ -253,7 +253,6 @@ public class Player : Mover
         // 2. Hitbox Query
         Collider[] cols = Physics.OverlapBox(transform.TransformPoint(attackCollider.center), attackCollider.size * 0.5f, transform.rotation);
         foreach(Collider col in cols) {
-            Debug.Log(col.gameObject.name);
             if(col.gameObject == gameObject || col.transform.root == transform)
                 continue;
             Rigidbody rb = col.GetComponent<Rigidbody>();
@@ -275,7 +274,6 @@ public class Player : Mover
                 }
                 // Add force to ragdoll
                 foreach(Rigidbody rbr in ragdollRbs) {
-                    Debug.Log(rbr.gameObject.name);
                     rbr.AddForce(transform.TransformDirection(localAttackForce), ForceMode.Impulse);
                 }
             }
