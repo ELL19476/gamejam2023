@@ -8,9 +8,9 @@ public class Enemy : Mover
     Vector3 t = Vector3.zero;
     bool moveToTarget = false;
 
+
     protected override void Start() {
         base.Start();
-        SetTarget(transform.position + Vector3.right * 5f);
     }
 
     public void SetTarget(Vector3 target) {
@@ -18,6 +18,11 @@ public class Enemy : Mover
         moveToTarget = true;
     }
     private void Update() {
-        moveToTarget = MoveTowards(moveToTarget?t:transform.position);
+        MoveTowards(t);
+    }
+
+    protected override bool CanMove(Vector3 normal)
+    {
+        return moveToTarget && base.CanMove(normal);
     }
 }
