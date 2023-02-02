@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,8 @@ public class Mover : MonoBehaviour, IDamagable
     [SerializeField]
     protected float stoppingDist = 0.1f;
     [Header("Movement")]  
+    [SerializeField]
+    protected float maxSlope = 45f;
     [SerializeField] 
     protected float speed = 1f;
     [SerializeField]
@@ -39,6 +42,7 @@ public class Mover : MonoBehaviour, IDamagable
     // HEALTH
 [   SerializeField]
     protected float health;
+
     public float Health { get => health; set {
         health = value;
         if(health <= 0) {
@@ -46,6 +50,7 @@ public class Mover : MonoBehaviour, IDamagable
             enabled = false;
         }
     } }
+    protected Action onLand;
 
     protected virtual void Start() {
         rigidBody = GetComponent<Rigidbody>();
@@ -73,8 +78,9 @@ public class Mover : MonoBehaviour, IDamagable
     }
     protected bool IsGrounded(out Vector3 dist) {
         dist = Vector3.zero;
-        if(Vector3.Dot(accumulatedVel, Vector3.down) < 0)
+        if(Vector3.Dot(accumulatedVel, Vector3.down) < 0) {
             return false;
+        }
 
         Vector3 lowerCapsuleSphereCenter = transform.TransformPoint(capsule.center) - transform.up * (capsule.height / 2f - capsule.radius);
         Vector3 groundPos = lowerCapsuleSphereCenter - transform.up * (capsule.radius - 0.05f);
@@ -83,19 +89,26 @@ public class Mover : MonoBehaviour, IDamagable
             int i = 0;
             if(cols.Length > 1) {
                 Physics.Raycast(groundCheck.position, -transform.up, out RaycastHit grnd, 1f, 1 << 6);
-                for(int j = 0; j < cols.Length; j++) {
-                    if(cols[j].gameObject == grnd.collider.gameObject) {
-                        i = j;
-                        break;
+                if(grnd.collider == null)
+                {
+                    i = 0;
+                } else {
+                    for(int j = 0; j < cols.Length; j++) {
+                        if(cols[j].gameObject == grnd.collider.gameObject) {
+                            i = j;
+                            break;
+                        }
                     }
                 }
             }
             Vector3 p = cols[i].ClosestPoint(groundPos);
             dist = (groundPos - p);
+            if(Mathf.Abs(Vector3.SignedAngle(dist.normalized, Vector3.up, Vector3.forward)) > maxSlope) {
+                return false;
+            }
             lastColDir = dist;
             return true;
         }
-
         return false;
     }
     protected virtual bool CanMove(Vector3 normal) {
@@ -112,9 +125,11 @@ public class Mover : MonoBehaviour, IDamagable
             float dot = Vector3.Dot(target - transform.position, direction);
             direction *= Mathf.Sign(dot); 
             if(Mathf.Abs(dot) > stoppingDist) {   
-                if(CanMove(normal))
+                if(CanMove(normal)) {
                     // Move towards the target
                     velocity = direction * speed * (slide? slideSpeedFactor : 1f);
+                    ProjectVelocityOntoColliders(ref velocity);
+                }
                 else {
                     canMove = false;
                 }
@@ -125,6 +140,7 @@ public class Mover : MonoBehaviour, IDamagable
             
             lastVelocity = velocity;
             if(!grounded) {
+                onLand?.Invoke();
                 // Move to ground
                 grounded = true;
             }
@@ -144,15 +160,28 @@ public class Mover : MonoBehaviour, IDamagable
             velocity = Vector3.ClampMagnitude(velocity, Mathf.Abs(speed * maxAirSpeedFraction));
             if(CanMove(Vector3.up)) 
                 velocity += (target - transform.position).normalized * speed * airControl;
-
             velocity = Vector3.ClampMagnitude(velocity, Mathf.Abs(speed * maxAirSpeedFraction));
+            ProjectVelocityOntoColliders(ref velocity);
+
             AddGravity();
             canMove = false;
             // Rotate towards the target
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right * Mathf.Sign(target.x - transform.position.x)), 3.5f * speed * Time.deltaTime);
         }
+        Debug.Log("Velocity: " + velocity + " | " + accumulatedVel);
         rigidBody.velocity = velocity + accumulatedVel;
         return canMove;
+    }
+
+    protected void ProjectVelocityOntoColliders(ref Vector3 velocity)
+    {
+        // Project onto colliders
+        Vector3 o = transform.up * (capsule.height / 2f - capsule.radius);
+        RaycastHit verticalCols;
+        bool hit = rigidBody.SweepTest(velocity.normalized, out verticalCols, velocity.magnitude * Time.deltaTime, QueryTriggerInteraction.Ignore);
+        if(hit) {
+            velocity = Vector3.ProjectOnPlane(velocity, verticalCols.normal);
+        }
     }
 
     protected void AddGravity() {
