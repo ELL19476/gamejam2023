@@ -48,4 +48,11 @@ public class AnimationEvents : MonoBehaviour
 
         t.localPosition = originalPos;
     }
+
+    public void PlayNamedParticles(string name) {
+        var p = GetComponentsInChildren<ParticleSystem>().FirstOrDefault(x => x.name == name);
+        if (p != null) {
+            p.Play();
+        }
+    }
 }
