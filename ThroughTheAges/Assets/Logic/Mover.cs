@@ -46,6 +46,8 @@ public class Mover : MonoBehaviour, IDamagable
     public float Health { get => health; set {
         health = value;
         if(health <= 0) {
+            // AUDIO: Death
+            
             EnableRagdoll(true);
             enabled = false;
             Instantiate(Resources.Load("Prefabs/Blood"), transform.position, Quaternion.identity);
