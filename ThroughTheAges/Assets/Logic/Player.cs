@@ -3,8 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[System.Serializable]
+public class StateSwitch {
+    public float time;
+    public Player.PlayerState state;
+}
+
 public class Player : Mover
 {
+
+    [SerializeField]
+    List<StateSwitch> stateSwitches = new List<StateSwitch>();
 
     [Header("Player Movement")]
     [SerializeField, Range(0, 3)]
@@ -98,6 +107,8 @@ public class Player : Mover
     public AgeStats ageStats;
 
     protected override void Start() {
+        StartCoroutine(PlayStates());
+        
         base.Start();
         ballCollider = GetComponent<SphereCollider>();
         ballEnabled = false;
@@ -118,6 +129,14 @@ public class Player : Mover
         //     EnableRagdoll(true);
         // }
         // StartCoroutine(a());
+    }
+
+    IEnumerator PlayStates() {
+        foreach (var s in stateSwitches)
+        {
+            yield return new WaitForSeconds(s.time);
+            state = s.state;
+        }
     }
 
     private void Update() {
