@@ -79,8 +79,12 @@ public class Visuals : MonoBehaviour
 
     private void Start()
     {
-            Show(ActiveAnimator());
+        foreach (var a in GetComponentsInChildren<Animator>(true))
+        {
+            a.enabled = false;
+        }
         
+        Show(ActiveAnimator());
     }
 
     public void Land(bool hard) {
