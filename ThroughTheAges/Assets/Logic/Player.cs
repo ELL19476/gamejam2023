@@ -271,12 +271,17 @@ public class Player : Mover
                 continue;
             Rigidbody rb = col.GetComponent<Rigidbody>();
             IDamagable health = col.GetComponent<IDamagable>();
+            BreakableWall wall = col.GetComponent<BreakableWall>();
 
             IEnumerator Knockback() {
                 yield return new WaitForSeconds(attackTime * 0.2f);
                 // 3. Damage
                 if(health != null) {
                     health.Health -= attackDamage;
+                }
+                // 4. Wall Knockback
+                if(wall != null) {
+                    wall.Break(transform.TransformPoint(capsule.center), localAttackForce.magnitude);
                 }
                 // 4. Knockback
                 var ragdollCols = Physics.OverlapBox(transform.TransformPoint(attackCollider.center), attackCollider.size * 0.5f, transform.rotation);
