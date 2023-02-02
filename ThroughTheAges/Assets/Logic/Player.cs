@@ -153,7 +153,7 @@ public class Player : Mover
         if(isJumping && afterApex && IsGrounded(out _)) {
             afterApex = false;
             isJumping = false;
-            Visuals.instance.Land();
+            Visuals.instance.Land(fastFalling);
         }
 
         SpecialAction(bufferedInput);

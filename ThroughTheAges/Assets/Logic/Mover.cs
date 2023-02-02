@@ -136,7 +136,6 @@ public class Mover : MonoBehaviour, IDamagable
                 // Stop Vertical Velocity
                 accumulatedVel = Vector3.zero;
             }
-            Debug.Log("GROUNDED!");
         } else {
             grounded = false;
             // Momentum
