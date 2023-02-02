@@ -59,4 +59,18 @@ public class AnimationEvents : MonoBehaviour
     public void DestroySelf() {
         Destroy(gameObject);
     }
+
+    public void StartParticles(string name) {
+        var p = GetComponentsInChildren<ParticleSystem>().FirstOrDefault(x => x.name == name);
+        if (p != null) {
+            p.Play();
+        }
+    }
+
+    public void StopParticles(string name) {
+        var p = GetComponentsInChildren<ParticleSystem>().FirstOrDefault(x => x.name == name);
+        if (p != null) {
+            p.Stop();
+        }
+    }
 }
