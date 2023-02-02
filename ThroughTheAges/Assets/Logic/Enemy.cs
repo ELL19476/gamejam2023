@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Enemy : Mover
 {
+    public float shootRange = 5f;
     public Transform position1, position2;
 
     Vector3 t = Vector3.zero;
@@ -36,12 +37,12 @@ public class Enemy : Mover
     }
     private void Update()
     {
-        if (Vector3.Distance(transform.position, position1.position) < range)
+        if (Vector3.Distance(transform.position.IgnoreY(), position1.position.IgnoreY()) < range)
         {
             SetTarget(position2.position);
         }
         // if reached position 2, move to position 1
-        else if (Vector3.Distance(transform.position, position2.position) < range)
+        else if (Vector3.Distance(transform.position.IgnoreY(), position2.position.IgnoreY()) < range)
         {
             SetTarget(position1.position);
         }
@@ -59,13 +60,24 @@ public class Enemy : Mover
         // AUDIO: Attack
         
         yield return new WaitForSeconds(attackInterval + Random.Range(-attackIntervalRandom, attackIntervalRandom));
-        moveToTarget = false;
-        var anim = GetComponentInChildren<Animator>();
-        anim.SetTrigger("attack");
-        yield return new WaitForSeconds(1f);
-        moveToTarget = true;
-        var obstacle = Instantiate(obstaclePrefab, obstacleSpawnPoint.transform.position, transform.rotation);
+        if(Vector3.Distance(transform.position, GameManager.player.transform.position) < shootRange) {
+            moveToTarget = false;
+            var anim = GetComponentInChildren<Animator>();
+            anim.SetTrigger("attack");
+            yield return new WaitForSeconds(1f);
+            moveToTarget = true;
+            var obstacle = Instantiate(obstaclePrefab, obstacleSpawnPoint.transform.position, transform.rotation);
+        }
         StartCoroutine(Attack());
         
+    }
+}
+
+
+public static class VectorExtensions
+{
+    public static Vector3 IgnoreY(this Vector3 v)
+    {
+        return new Vector3(v.x, 0, v.z);
     }
 }
