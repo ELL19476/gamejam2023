@@ -39,6 +39,7 @@ public class Mover : MonoBehaviour, IDamagable
     Vector3 lastColDir = Vector3.up;
 
     [Header("Damagable")]
+    public Action onDie;
     // HEALTH
 [   SerializeField]
     protected float health;
@@ -47,6 +48,7 @@ public class Mover : MonoBehaviour, IDamagable
         health = value;
         if(health <= 0) {
             // AUDIO: Death
+            onDie?.Invoke();
             Audio.Play("Path/Zu/Deinem/Sound/Im/Resources/Ordner");
             
             EnableRagdoll(true);
@@ -84,6 +86,7 @@ public class Mover : MonoBehaviour, IDamagable
     protected virtual void EnableRagdoll(bool enable) {
         capsule.enabled = !enable;
         foreach (Rigidbody rb in childBodies) {
+            rb.GetComponents<Collider>().ToList().ForEach(c => c.enabled = enable);
             rb.isKinematic = !enable;
             rb.detectCollisions = enable;
         }
@@ -98,11 +101,11 @@ public class Mover : MonoBehaviour, IDamagable
         Vector3 groundPos = lowerCapsuleSphereCenter - transform.up * (capsule.radius - 0.05f);
 
         bool zero = accumulatedVel == Vector3.zero;
-        Collider[] cols = Physics.OverlapSphere(lowerCapsuleSphereCenter, capsule.radius + 0.05f, 1 << 6);
+        Collider[] cols = Physics.OverlapSphere(lowerCapsuleSphereCenter, capsule.radius + 0.05f, 1 << 6, QueryTriggerInteraction.Ignore);
         if(cols.Length > 0) {
             int i = 0;
             if(cols.Length > 1) {
-                Physics.Raycast(groundCheck.position, -transform.up, out RaycastHit grnd, 1f, 1 << 6);
+                Physics.Raycast(groundCheck.position, -transform.up, out RaycastHit grnd, 1f, 1 << 6, QueryTriggerInteraction.Ignore);
                 if(grnd.collider == null)
                 {
                     i = 0;
@@ -126,7 +129,7 @@ public class Mover : MonoBehaviour, IDamagable
         return false;
     }
     protected virtual bool CanMove(Vector3 normal) {
-        return Physics.Raycast(groundCheck.position, -normal, out _, 1f, 1 << 6);
+        return Physics.Raycast(groundCheck.position, -normal, out _, 1f, 1 << 6, QueryTriggerInteraction.Ignore);
     }
     protected virtual bool MoveTowards(Vector3 target, bool slide = false)
     {
@@ -191,10 +194,14 @@ public class Mover : MonoBehaviour, IDamagable
     {
         // Project onto colliders
         Vector3 o = transform.up * (capsule.height / 2f - capsule.radius);
-        RaycastHit verticalCols;
-        bool hit = rigidBody.SweepTest(velocity.normalized, out verticalCols, velocity.magnitude * Time.deltaTime, QueryTriggerInteraction.Ignore);
-        if(hit) {
-            velocity = Vector3.ProjectOnPlane(velocity, verticalCols.normal);
+        RaycastHit[] verticalCols;
+        verticalCols = rigidBody.SweepTestAll(velocity.normalized, Mathf.Max(velocity.magnitude * Time.deltaTime, 0.2f), QueryTriggerInteraction.Ignore);
+        if(verticalCols.Length > 0) {
+            foreach(RaycastHit col in verticalCols) {
+                if(col.collider.gameObject.layer == 6) {
+                    velocity = Vector3.ProjectOnPlane(velocity, col.normal);
+                }
+            }
         }
     }
 

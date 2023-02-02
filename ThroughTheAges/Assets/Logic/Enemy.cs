@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,6 @@ public class Enemy : Mover
 
     public GameObject obstaclePrefab;
     public GameObject obstacleSpawnPoint;
-
 
     protected override void Start()
     {
@@ -58,7 +58,7 @@ public class Enemy : Mover
     {
         // AUDIO: Attack
         
-        yield return new WaitForSeconds(attackInterval + Random.Range(-attackIntervalRandom, attackIntervalRandom));
+        yield return new WaitForSeconds(attackInterval + UnityEngine.Random.Range(-attackIntervalRandom, attackIntervalRandom));
         moveToTarget = false;
         var anim = GetComponentInChildren<Animator>();
         anim.SetTrigger("attack");
