@@ -8,7 +8,7 @@ public class Mover : MonoBehaviour, IDamagable
     protected Rigidbody rigidBody;
     protected CapsuleCollider capsule;
     protected Rigidbody[] childBodies;
-    [Header("SetUp")]  
+    [Header("SetUp")]
    [SerializeField] 
     protected Transform groundCheck;
    [SerializeField] 
@@ -136,6 +136,7 @@ public class Mover : MonoBehaviour, IDamagable
                 // Stop Vertical Velocity
                 accumulatedVel = Vector3.zero;
             }
+            Debug.Log("GROUNDED!");
         } else {
             grounded = false;
             // Momentum
@@ -163,5 +164,9 @@ public class Mover : MonoBehaviour, IDamagable
     protected virtual void Jump() {
         accumulatedVel.y = 0;
         accumulatedVel += Vector3.up * jumpSpeed;
+    }
+
+    public void SetVelocity(Vector3 force) {
+        accumulatedVel = force;
     }
 }

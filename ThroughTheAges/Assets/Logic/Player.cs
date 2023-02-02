@@ -305,6 +305,8 @@ public class Player : Mover
             capsule.center = ageStats.colliders[(int)_state].center;
             capsule.direction = ageStats.colliders[(int)_state].direction;
         }
+        // Change masses
+        rigidBody.mass = ageStats.masses[(int)_state];
 
         Visuals.instance.age = (Visuals.Age)_state;
     }

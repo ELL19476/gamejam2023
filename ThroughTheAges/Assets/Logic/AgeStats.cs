@@ -10,5 +10,5 @@ public class AgeStats : ScriptableObject
     [Tooltip("0 = Baby, 1 = Teen, 2 = Old")]
     public float[] speeds;
 
-
+    public float[] masses;
 }
