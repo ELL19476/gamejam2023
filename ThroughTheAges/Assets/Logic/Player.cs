@@ -77,6 +77,9 @@ public class Player : Mover
     }
     protected SphereCollider ballCollider;
     float normalMass = 1f;
+    [SerializeField]
+    protected float rollCooldown;
+    float lastRollTime = 0;
 
     // ATTACK
     [Header("Attack")]
@@ -107,6 +110,10 @@ public class Player : Mover
         originalGravity = gravityScale;
 
         ChangeState();
+        onLand += () => {
+            if(!isJumping)
+                Visuals.instance.Land();
+        };
         // TMP
         // IEnumerator a() {
         //     yield return new WaitForSeconds(3);
@@ -185,8 +192,13 @@ public class Player : Mover
         } else if(state == PlayerState.Baby) {
             // Roll
             if(Input.GetKeyDown(KeyCode.Space) || bufferedInput == KeyCode.Space) {
-                ballEnabled = true;
-            } 
+                if(Time.time - lastRollTime > rollCooldown)
+                    ballEnabled = true;
+                else {
+                    inputBuffer = KeyCode.Space;
+                    lastInputBufferTime = Time.time;
+                }
+            }
             if(ballEnabled && Input.GetKeyUp(KeyCode.Space)) {
                 ballEnabled = false;
             }
@@ -207,6 +219,8 @@ public class Player : Mover
                 rigidBody.MoveRotation(Quaternion.LookRotation(Vector3.up));
                 accumulatedVel = Vector3.up * jumpSpeed;
             }
+
+            lastRollTime = Time.time;
         }
         else {
             Visuals.instance.Special();
