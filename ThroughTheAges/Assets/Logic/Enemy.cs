@@ -71,6 +71,18 @@ public class Enemy : Mover
         StartCoroutine(Attack());
         
     }
+
+    protected override void EnableRagdoll(bool enable)
+    {
+        if(enable)
+        GetComponentsInChildren<Animator>().ToList().ForEach(a => {
+            a.enabled = false;
+        });
+        if(enable)
+            Visuals.instance.ActiveAnimator().gameObject.SetActive(true);
+
+        base.EnableRagdoll(enable);
+    }
 }
 
 
@@ -80,4 +92,5 @@ public static class VectorExtensions
     {
         return new Vector3(v.x, 0, v.z);
     }
+    
 }
