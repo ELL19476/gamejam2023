@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3666646155611541116}
   - component: {fileID: 1733523384193359963}
   - component: {fileID: 86025171614196284}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: polySurface243
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6412276291736206940}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Boden_Stachel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 269463675325878072}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: transform20
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8448396597920715481}
   - component: {fileID: 8448396597920715480}
   - component: {fileID: 8448396597920715479}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bank_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8448396597920715478}
-  m_Mesh: {fileID: -2432090755550338912, guid: 793d806fb764b7c4fbd9d6a13e3807c1, type: 3}
+  m_Mesh: {fileID: -2432090755550338912, guid: c03934b1e3591ac4dabe0c569e4405b1, type: 3}
 --- !u!23 &8448396597920715480
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -95,5 +95,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 11.956757, y: 4.956775, z: 2.521617}
-  m_Center: {x: 0, y: 4.2223034, z: -0.0818785}
+  m_Size: {x: 11.956757, y: 3.2283955, z: 2.521617}
+  m_Center: {x: 0, y: 3.898274, z: -0.0818785}

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4122683591176305335}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Candel_Chain_Kronleuchter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,6 +109,10 @@ PrefabInstance:
     - target: {fileID: 3234899882618349657, guid: af451310d19a053429e3a5ccbafc02f0, type: 3}
       propertyPath: m_Name
       value: Kronleuchter
+      objectReference: {fileID: 0}
+    - target: {fileID: 3234899882618349657, guid: af451310d19a053429e3a5ccbafc02f0, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7125520270307849598, guid: af451310d19a053429e3a5ccbafc02f0, type: 3}
       propertyPath: m_RootOrder
@@ -216,6 +220,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kerz_3 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5430340531462400642, guid: d8b6e388f1799934c94a7379fef68175, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8b6e388f1799934c94a7379fef68175, type: 3}
 --- !u!4 &56535963067024299 stripped
@@ -278,6 +286,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kerz_3 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5430340531462400642, guid: d8b6e388f1799934c94a7379fef68175, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8b6e388f1799934c94a7379fef68175, type: 3}
 --- !u!4 &56535962935436517 stripped
@@ -295,6 +307,10 @@ PrefabInstance:
     - target: {fileID: 3467058631396578353, guid: a412f3d37202a2747bbc5cde8cfc2a7c, type: 3}
       propertyPath: m_Name
       value: Kerz_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3467058631396578353, guid: a412f3d37202a2747bbc5cde8cfc2a7c, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4275789442950106763, guid: a412f3d37202a2747bbc5cde8cfc2a7c, type: 3}
       propertyPath: m_RootOrder
@@ -401,6 +417,10 @@ PrefabInstance:
     - target: {fileID: 6841345746764625635, guid: 71da1e1bdb61ff6409603b0e8a6c1102, type: 3}
       propertyPath: m_Name
       value: Kerz_2 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6841345746764625635, guid: 71da1e1bdb61ff6409603b0e8a6c1102, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71da1e1bdb61ff6409603b0e8a6c1102, type: 3}
