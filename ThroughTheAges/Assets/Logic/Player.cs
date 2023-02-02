@@ -76,7 +76,6 @@ public class Player : Mover
         }
     }
     protected SphereCollider ballCollider;
-    float normalMass = 1f;
     [SerializeField]
     protected float rollCooldown;
     float lastRollTime = 0;
@@ -102,7 +101,6 @@ public class Player : Mover
         base.Start();
         ballCollider = GetComponent<SphereCollider>();
         ballEnabled = false;
-        normalMass = rigidBody.mass;
 
         attackCollider = GetComponent<BoxCollider>();
         attackCollider.enabled = false;
@@ -214,7 +212,7 @@ public class Player : Mover
         ballCollider.enabled = enable;
         if(!enable) {
             Visuals.instance.EndSpecial();
-            rigidBody.mass = normalMass;
+            rigidBody.mass = ageStats.masses[(int)state];
             if(IsGrounded(out _)) {
                 rigidBody.MoveRotation(Quaternion.LookRotation(Vector3.up));
                 accumulatedVel = Vector3.up * jumpSpeed;
