@@ -7,14 +7,16 @@ public class Player : Mover
 {
 
     [Header("Player Movement")]
-    [SerializeField, Range(0, 3)]
+    [SerializeField, Range(0, 10)]
     protected float ballAcceleration = 1f;
     [SerializeField, Range(0, 100)]
     protected float ballDrag = 1f;
-    [SerializeField, Range(0, 100)]
+    [SerializeField, Range(0, 1000)]
     protected float maxBallSpeed = 1f;
     [SerializeField]
     protected float ballMass = 10;
+    [SerializeField, Range(0, 100)]
+    protected float ballGravity = 1f;
 
     [Header("Juice")]
     [Range(0, 1)]
@@ -213,6 +215,7 @@ public class Player : Mover
         rigidBody.freezeRotation = !enable;
         capsule.enabled = !enable;
         ballCollider.enabled = enable;
+        gravityScale = enable ? ballGravity : originalGravity;
         if(!enable) {
             Visuals.instance.EndSpecial();
             rigidBody.mass = ageStats.masses[(int)state];
