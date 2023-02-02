@@ -112,7 +112,7 @@ public class Player : Mover
         ChangeState();
         onLand += () => {
             if(!isJumping)
-                Visuals.instance.Land();
+                Visuals.instance.Land(false);
         };
         // TMP
         // IEnumerator a() {
