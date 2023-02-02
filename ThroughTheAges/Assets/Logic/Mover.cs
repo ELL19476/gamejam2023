@@ -48,6 +48,15 @@ public class Mover : MonoBehaviour, IDamagable
         if(health <= 0) {
             EnableRagdoll(true);
             enabled = false;
+            Instantiate(Resources.Load("Prefabs/Blood"), transform.position, Quaternion.identity);
+            var activeCinemachine = FindObjectOfType<Cinemachine.CinemachineBrain>().ActiveVirtualCamera;
+
+            if(activeCinemachine != null) {
+                activeCinemachine.Follow = null;
+            }
+
+            AnimationEvents.ShakeScreenEffect();
+            AnimationEvents.ReloadScene();
         }
     } }
     protected Action onLand;
@@ -168,7 +177,6 @@ public class Mover : MonoBehaviour, IDamagable
             // Rotate towards the target
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right * Mathf.Sign(target.x - transform.position.x)), 3.5f * speed * Time.deltaTime);
         }
-        Debug.Log("Velocity: " + velocity + " | " + accumulatedVel);
         rigidBody.velocity = velocity + accumulatedVel;
         return canMove;
     }
