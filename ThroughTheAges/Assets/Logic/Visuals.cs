@@ -81,10 +81,13 @@ public class Visuals : MonoBehaviour
         
     }
 
-    public void Land() {
+    public void Land(bool hard) {
         // SOUND: Land
         
-        GameObject.Find("Land").GetComponent<ParticleSystem>().Play();
+        if(hard)
+        GameObject.Find("LandHard").GetComponent<ParticleSystem>().Play();
+        else
+        GameObject.Find("LandSoft").GetComponent<ParticleSystem>().Play();
 
         foreach (var a in GetComponentsInChildren<Animator>(true)) {
             a.SetTrigger("land");
@@ -115,6 +118,7 @@ public class Visuals : MonoBehaviour
         foreach (var a in GetComponentsInChildren<Animator>(true)) {
             switch (age) {
                 case Age.Baby:
+                    a.GetComponent<AnimationEvents>()?.StartParticles("Roll");
                     a.SetTrigger("roll");
                     break;
                 case Age.Teenie:
@@ -219,6 +223,29 @@ public class Visuals : MonoBehaviour
             t += Time.deltaTime;
             var val = Mathf.Lerp(from, to, t / dur);
             armature.localScale = new Vector3(val, val, val);
+            yield return null;
+        }
+    }
+
+    private void Update()
+    {
+    }
+
+    public void WinState()
+    {
+        ActiveAnimator().enabled = false;
+        StartCoroutine(Fly());
+    }
+
+    IEnumerator Fly() {
+        var start = transform.position;
+        var height = start + Vector3.up * 10f;
+
+        var t = 0f;
+
+        while (t < 1f) {
+            t += Time.deltaTime * .1f;
+            transform.position = Vector3.Lerp(start, height, t);
             yield return null;
         }
     }

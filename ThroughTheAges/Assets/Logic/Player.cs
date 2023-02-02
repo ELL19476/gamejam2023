@@ -112,7 +112,7 @@ public class Player : Mover
         ChangeState();
         onLand += () => {
             if(!isJumping)
-                Visuals.instance.Land();
+                Visuals.instance.Land(false);
         };
         // TMP
         // IEnumerator a() {
@@ -160,7 +160,7 @@ public class Player : Mover
         if(isJumping && afterApex && IsGrounded(out _)) {
             afterApex = false;
             isJumping = false;
-            Visuals.instance.Land();
+            Visuals.instance.Land(fastFalling);
         }
 
         SpecialAction(bufferedInput);
