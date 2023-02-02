@@ -47,6 +47,7 @@ public class Mover : MonoBehaviour, IDamagable
         health = value;
         if(health <= 0) {
             // AUDIO: Death
+            Audio.Play("Path/Zu/Deinem/Sound/Im/Resources/Ordner");
             
             EnableRagdoll(true);
             enabled = false;

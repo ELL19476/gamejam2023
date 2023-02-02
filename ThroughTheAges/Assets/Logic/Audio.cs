@@ -5,7 +5,7 @@ using UnityEngine;
 public class Audio : MonoBehaviour
 {
     static AudioSource source;
-    static void Play(string name, float pitchRandomness = .2f) {
+    public static void Play(string name, float pitchRandomness = .2f) {
         var clip = Resources.Load<AudioClip>("Sounds/" + name);
         if (clip == null) {
             Debug.Log("Audio clip not found: " + name);
@@ -17,7 +17,7 @@ public class Audio : MonoBehaviour
     }
 
     public void Play(string name) {
-        Play(name);
+        Audio.Play(name);
     }
 
     static AudioSource GetSource() {
