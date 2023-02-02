@@ -37,6 +37,8 @@ public class Visuals : MonoBehaviour
         {
             if (_age == value) return;
 
+            // AUDIO: Change
+
             GameObject.Find("Change").GetComponent<ParticleSystem>().Play(true);
             
             Hide(ActiveAnimator());
@@ -82,7 +84,7 @@ public class Visuals : MonoBehaviour
     }
 
     public void Land(bool hard) {
-        // SOUND: Land
+        // AUDIO: Land
         
         if(hard)
         GameObject.Find("LandHard").GetComponent<ParticleSystem>().Play();
@@ -120,12 +122,18 @@ public class Visuals : MonoBehaviour
                 case Age.Baby:
                     a.GetComponent<AnimationEvents>()?.StartParticles("Roll");
                     a.SetTrigger("roll");
+
+                    // AUDIO: Roll
                     break;
                 case Age.Teenie:
                     a.SetTrigger("jumpStart");
+
+                    // AUDIO: Jump
                     break;
                 case Age.Granny:
                     a.SetTrigger("attack");
+
+                    // AUDIO: Attack
                     break;
             }
         }
@@ -135,6 +143,8 @@ public class Visuals : MonoBehaviour
             switch (age) {
                 case Age.Baby:
                     a.SetTrigger("endRoll");
+
+                    // AUDIO: End Roll
                     break;
                 case Age.Teenie:
                     a.SetTrigger("jumpApex");
@@ -235,6 +245,8 @@ public class Visuals : MonoBehaviour
     {
         ActiveAnimator().enabled = false;
         StartCoroutine(Fly());
+
+        // AUDIO: Win
     }
 
     IEnumerator Fly() {

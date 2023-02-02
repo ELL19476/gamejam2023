@@ -56,6 +56,8 @@ public class Enemy : Mover
 
     IEnumerator Attack()
     {
+        // AUDIO: Attack
+        
         yield return new WaitForSeconds(attackInterval + Random.Range(-attackIntervalRandom, attackIntervalRandom));
         moveToTarget = false;
         var anim = GetComponentInChildren<Animator>();
