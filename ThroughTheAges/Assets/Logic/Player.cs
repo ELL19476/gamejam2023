@@ -110,7 +110,7 @@ public class Player : Mover
         ChangeState();
         onLand += () => {
             if(!isJumping)
-                Visuals.instance.Land(false);
+                Visuals.instance.Land(fastFalling);
         };
         // TMP
         // IEnumerator a() {
@@ -128,6 +128,9 @@ public class Player : Mover
             lastGroundedTime = Time.time;
         }
         DoActions(inputBuffer);
+        
+        rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, 0);
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
     }
 
     protected void DoActions(KeyCode bufferedInput) {

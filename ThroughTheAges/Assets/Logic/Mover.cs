@@ -48,6 +48,15 @@ public class Mover : MonoBehaviour, IDamagable
         if(health <= 0) {
             EnableRagdoll(true);
             enabled = false;
+            Instantiate(Resources.Load("Prefabs/Blood"), transform.position, Quaternion.identity);
+            var activeCinemachine = FindObjectOfType<Cinemachine.CinemachineBrain>().ActiveVirtualCamera;
+
+            if(activeCinemachine != null) {
+                activeCinemachine.Follow = null;
+            }
+
+            AnimationEvents.ShakeScreenEffect();
+            AnimationEvents.ReloadScene();
         }
     } }
     protected Action onLand;
