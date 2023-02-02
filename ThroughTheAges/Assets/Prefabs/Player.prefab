@@ -2064,6 +2064,7 @@ MonoBehaviour:
   fastFallFactor: 4
   coyoteTime: 0.14
   bufferTime: 0.3
+  colliderObject: {fileID: 0}
   rollCooldown: 0.5
   localAttackForce: {x: 0, y: -1, z: 20}
   attackDamage: 1

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,6 @@ public class Enemy : Mover
 
     public GameObject obstaclePrefab;
     public GameObject obstacleSpawnPoint;
-
 
     protected override void Start()
     {
@@ -59,7 +59,7 @@ public class Enemy : Mover
     {
         // AUDIO: Attack
         
-        yield return new WaitForSeconds(attackInterval + Random.Range(-attackIntervalRandom, attackIntervalRandom));
+        yield return new WaitForSeconds(attackInterval + UnityEngine.Random.Range(-attackIntervalRandom, attackIntervalRandom));
         if(Vector3.Distance(transform.position, GameManager.player.transform.position) < shootRange) {
             moveToTarget = false;
             var anim = GetComponentInChildren<Animator>();
@@ -71,6 +71,18 @@ public class Enemy : Mover
         StartCoroutine(Attack());
         
     }
+
+    protected override void EnableRagdoll(bool enable)
+    {
+        if(enable)
+        GetComponentsInChildren<Animator>().ToList().ForEach(a => {
+            a.enabled = false;
+        });
+        if(enable)
+            Visuals.instance.ActiveAnimator().gameObject.SetActive(true);
+
+        base.EnableRagdoll(enable);
+    }
 }
 
 
@@ -80,4 +92,5 @@ public static class VectorExtensions
     {
         return new Vector3(v.x, 0, v.z);
     }
+    
 }
