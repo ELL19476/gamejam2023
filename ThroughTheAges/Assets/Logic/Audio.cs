@@ -16,8 +16,8 @@ public class Audio : MonoBehaviour
         source.PlayOneShot(clip);
     }
 
-    public void Play() {
-        Play("step");
+    public void Play(string name) {
+        Play(name);
     }
 
     static AudioSource GetSource() {
