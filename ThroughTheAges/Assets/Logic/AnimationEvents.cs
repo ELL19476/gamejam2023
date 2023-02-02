@@ -55,4 +55,8 @@ public class AnimationEvents : MonoBehaviour
             p.Play();
         }
     }
+
+    public void DestroySelf() {
+        Destroy(gameObject);
+    }
 }
