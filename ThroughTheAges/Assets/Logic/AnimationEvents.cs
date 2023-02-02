@@ -75,7 +75,6 @@ public class AnimationEvents : MonoBehaviour
         while (color.a < 1) {
             color.a += Time.deltaTime * .5f;
             darkening.color = color;
-            Debug.Log(color);
             yield return null;
         }
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);

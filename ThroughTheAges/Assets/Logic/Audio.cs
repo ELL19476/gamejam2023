@@ -8,7 +8,7 @@ public class Audio : MonoBehaviour
     public static void Play(string name, float pitchRandomness = .2f) {
         var clip = Resources.Load<AudioClip>("Sounds/" + name);
         if (clip == null) {
-            Debug.Log("Audio clip not found: " + name);
+            Debug.LogWarning("Audio clip not found: " + name);
             return;
         }
         var source = GetSource();
