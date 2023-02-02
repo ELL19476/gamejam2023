@@ -8,16 +8,32 @@ public class Enemy : Mover
     Vector3 t = Vector3.zero;
     bool moveToTarget = false;
 
-    protected override void Start() {
+    public float range = 5f;
+
+
+    protected override void Start()
+    {
         base.Start();
-        SetTarget(transform.position + Vector3.right * 5f);
     }
 
-    public void SetTarget(Vector3 target) {
+    public void SetTarget(Vector3 target)
+    {
         t = target;
         moveToTarget = true;
     }
-    private void Update() {
-        moveToTarget = MoveTowards(moveToTarget?t:transform.position);
+    private void Update()
+    {
+        SetTarget(GameManager.player.transform.position);
+        
+        MoveTowards(t);
+
+        moveToTarget = Vector3.Distance(transform.position, t) > range;
+
+        moveToTarget = true;
+    }
+
+    protected override bool CanMove(Vector3 normal)
+    {
+        return moveToTarget && base.CanMove(normal);
     }
 }
