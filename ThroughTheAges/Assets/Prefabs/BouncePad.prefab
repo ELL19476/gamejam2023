@@ -129,7 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particles: {fileID: 4702858279827632634, guid: 903b4507d44b94e60a642be6b37a1911, type: 3}
   rad: 0.5
-  mag: 4
+  mag: 5
   size: 20
   tc: 3
   speed: 10
