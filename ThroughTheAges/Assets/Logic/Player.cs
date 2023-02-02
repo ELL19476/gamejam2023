@@ -192,8 +192,8 @@ public class Player : Mover
             }
         } else if(state == PlayerState.Baby) {
             // Roll
-            if(Input.GetKeyDown(KeyCode.Space) || bufferedInput == KeyCode.Space) {
-                if(Time.time - lastRollTime > rollCooldown)
+            if(Input.GetKeyDown(KeyCode.Space) || (bufferedInput == KeyCode.Space && Input.GetKey(KeyCode.Space))) {
+                if(Time.time - lastRollTime > rollCooldown && IsGrounded(out _))
                     ballEnabled = true;
                 else {
                     inputBuffer = KeyCode.Space;
