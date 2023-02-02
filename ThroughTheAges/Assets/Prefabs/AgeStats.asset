@@ -17,10 +17,10 @@ MonoBehaviour:
   - {fileID: 5577806035654778245, guid: 129d3365a63734b7da52503e204a7ff9, type: 3}
   - {fileID: 3422833300652849800, guid: 6a99e1df8bb6e4a759d60069df823bfc, type: 3}
   speeds:
-  - 2
-  - 7
-  - 0.2
-  masses:
+  - 3
+  - 12
   - 4
-  - 5
-  - 5
+  masses:
+  - 3.5
+  - 3.5
+  - 3.5

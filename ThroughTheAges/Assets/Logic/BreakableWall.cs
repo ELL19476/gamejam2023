@@ -37,6 +37,7 @@ public class BreakableWall : MonoBehaviour
                 t += Time.deltaTime;
                 while (t < 0.5f)
                 {
+                    if(rb != null)
                     rb.transform.localScale = startScale * (1f - t / 0.5f);
                     t += Time.deltaTime;
                     yield return null;

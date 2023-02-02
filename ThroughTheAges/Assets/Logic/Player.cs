@@ -3,18 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[System.Serializable]
+public class StateSwitch {
+    public float time;
+    public Player.PlayerState state;
+}
+
 public class Player : Mover
 {
 
+    [SerializeField]
+    List<StateSwitch> stateSwitches = new List<StateSwitch>();
+
     [Header("Player Movement")]
-    [SerializeField, Range(0, 3)]
+    [SerializeField, Range(0, 10)]
     protected float ballAcceleration = 1f;
     [SerializeField, Range(0, 100)]
     protected float ballDrag = 1f;
-    [SerializeField, Range(0, 100)]
+    [SerializeField, Range(0, 1000)]
     protected float maxBallSpeed = 1f;
     [SerializeField]
     protected float ballMass = 10;
+    [SerializeField, Range(0, 100)]
+    protected float ballGravity = 1f;
 
     [Header("Juice")]
     [Range(0, 1)]
@@ -98,6 +109,8 @@ public class Player : Mover
     public AgeStats ageStats;
 
     protected override void Start() {
+        StartCoroutine(PlayStates());
+        
         base.Start();
         ballCollider = GetComponent<SphereCollider>();
         ballEnabled = false;
@@ -118,6 +131,14 @@ public class Player : Mover
         //     EnableRagdoll(true);
         // }
         // StartCoroutine(a());
+    }
+
+    IEnumerator PlayStates() {
+        foreach (var s in stateSwitches)
+        {
+            yield return new WaitForSeconds(s.time);
+            state = s.state;
+        }
     }
 
     private void Update() {
@@ -213,6 +234,7 @@ public class Player : Mover
         rigidBody.freezeRotation = !enable;
         capsule.enabled = !enable;
         ballCollider.enabled = enable;
+        gravityScale = enable ? ballGravity : originalGravity;
         if(!enable) {
             Visuals.instance.EndSpecial();
             rigidBody.mass = ageStats.masses[(int)state];

@@ -135,6 +135,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5061536900356006723}
     m_Modifications:
+    - target: {fileID: 1800109712885013876, guid: a91984374c2264d95873be5434a62da4, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7846051399888204219, guid: a91984374c2264d95873be5434a62da4, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -206,6 +210,10 @@ PrefabInstance:
     - target: {fileID: 7846051400850980458, guid: a91984374c2264d95873be5434a62da4, type: 3}
       propertyPath: attackIntervalRandom
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8286263856689927857, guid: a91984374c2264d95873be5434a62da4, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a91984374c2264d95873be5434a62da4, type: 3}

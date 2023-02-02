@@ -1950,7 +1950,7 @@ GameObject:
   - component: {fileID: 6582893616186627625}
   - component: {fileID: 6582893616186627624}
   - component: {fileID: 6582893616186627630}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2048,7 +2048,7 @@ MonoBehaviour:
   groundCheck: {fileID: 6582893615555297132}
   gravityScale: 4
   stoppingDist: 0.1
-  maxSlope: 10
+  maxSlope: 85
   speed: 7
   jumpSpeed: 7
   airDrag: 1.5
@@ -2056,15 +2056,16 @@ MonoBehaviour:
   airControl: 0.8
   slideSpeedFactor: 2
   health: 1
-  ballAcceleration: 0.9
+  stateSwitches: []
+  ballAcceleration: 6
   ballDrag: 6
-  maxBallSpeed: 80
+  maxBallSpeed: 30
   ballMass: 4
+  ballGravity: 30
   slowJumpFactor: 0.35
   fastFallFactor: 4
   coyoteTime: 0.14
   bufferTime: 0.3
-  colliderObject: {fileID: 0}
   rollCooldown: 0.5
   localAttackForce: {x: 0, y: -1, z: 20}
   attackDamage: 1
