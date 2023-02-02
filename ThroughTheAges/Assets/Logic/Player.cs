@@ -341,7 +341,7 @@ public class Player : Mover
             ballCollider.enabled = !enable;
         
         if(enable)
-        GetComponentsInChildren<Animator>().ToList().ForEach(a => {
+            GetComponentsInChildren<Animator>().ToList().ForEach(a => {
             a.enabled = false;
         });
         if(enable)
