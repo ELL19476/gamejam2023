@@ -2056,15 +2056,12 @@ MonoBehaviour:
   airControl: 0.8
   slideSpeedFactor: 2
   health: 1
-  stateSwitches:
-  - time: 0.1
-    state: 1
-  - time: 2.5
-    state: 2
-  ballAcceleration: 0.9
+  stateSwitches: []
+  ballAcceleration: 6
   ballDrag: 6
-  maxBallSpeed: 80
+  maxBallSpeed: 30
   ballMass: 4
+  ballGravity: 30
   slowJumpFactor: 0.35
   fastFallFactor: 4
   coyoteTime: 0.14
