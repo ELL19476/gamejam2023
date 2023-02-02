@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4570937311379414690}
   - component: {fileID: 7658182564714338753}
   - component: {fileID: 4066775193961386262}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Stuetze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5238443252561460967}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprungbrett
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 1631748562972769356}
   - component: {fileID: 1114175245458879270}
   - component: {fileID: 636583757886923173}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SprungBrett
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,6 +282,10 @@ PrefabInstance:
     - target: {fileID: 4163437988253848959, guid: cde43cdd4c4bc4ff7814d14854230ddd, type: 3}
       propertyPath: m_Name
       value: BouncePad
+      objectReference: {fileID: 0}
+    - target: {fileID: 4163437988253848959, guid: cde43cdd4c4bc4ff7814d14854230ddd, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cde43cdd4c4bc4ff7814d14854230ddd, type: 3}

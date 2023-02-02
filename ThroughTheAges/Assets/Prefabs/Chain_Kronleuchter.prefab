@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5765144103232149456}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Chain_Kronleuchter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,6 +88,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chain
       objectReference: {fileID: 0}
+    - target: {fileID: 6349722073427717622, guid: 7cfba81aa466ea0438a5615e7fe6f449, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7cfba81aa466ea0438a5615e7fe6f449, type: 3}
 --- !u!4 &3019703764377011975 stripped
@@ -105,6 +109,10 @@ PrefabInstance:
     - target: {fileID: 3234899882618349657, guid: af451310d19a053429e3a5ccbafc02f0, type: 3}
       propertyPath: m_Name
       value: Kronleuchter
+      objectReference: {fileID: 0}
+    - target: {fileID: 3234899882618349657, guid: af451310d19a053429e3a5ccbafc02f0, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7125520270307849598, guid: af451310d19a053429e3a5ccbafc02f0, type: 3}
       propertyPath: m_RootOrder

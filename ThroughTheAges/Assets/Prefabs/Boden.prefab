@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1040936474261663051}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Boden
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6139407594796538927}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: transform20
   m_TagString: Untagged
   m_Icon: {fileID: 0}

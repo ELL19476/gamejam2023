@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8221245460733502058}
   - component: {fileID: 6193377997962139296}
   - component: {fileID: 4770114479136590374}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bank_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,5 +95,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.34861344, y: 0.07770127, z: 0.11478752}
-  m_Center: {x: 0.000000014901161, y: 0.025743052, z: 0}
+  m_Size: {x: 0.34861344, y: 0.058309346, z: 0.11478752}
+  m_Center: {x: 0.000000014901161, y: 0.035439014, z: 0}
