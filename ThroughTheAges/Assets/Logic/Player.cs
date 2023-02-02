@@ -76,7 +76,6 @@ public class Player : Mover
         }
     }
     protected SphereCollider ballCollider;
-    float normalMass = 1f;
     [SerializeField]
     protected float rollCooldown;
     float lastRollTime = 0;
@@ -102,7 +101,6 @@ public class Player : Mover
         base.Start();
         ballCollider = GetComponent<SphereCollider>();
         ballEnabled = false;
-        normalMass = rigidBody.mass;
 
         attackCollider = GetComponent<BoxCollider>();
         attackCollider.enabled = false;
@@ -112,7 +110,7 @@ public class Player : Mover
         ChangeState();
         onLand += () => {
             if(!isJumping)
-                Visuals.instance.Land(false);
+                Visuals.instance.Land(fastFalling);
         };
         // TMP
         // IEnumerator a() {
@@ -130,6 +128,9 @@ public class Player : Mover
             lastGroundedTime = Time.time;
         }
         DoActions(inputBuffer);
+        
+        rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, 0);
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
     }
 
     protected void DoActions(KeyCode bufferedInput) {
@@ -191,8 +192,8 @@ public class Player : Mover
             }
         } else if(state == PlayerState.Baby) {
             // Roll
-            if(Input.GetKeyDown(KeyCode.Space) || bufferedInput == KeyCode.Space) {
-                if(Time.time - lastRollTime > rollCooldown)
+            if(Input.GetKeyDown(KeyCode.Space) || (bufferedInput == KeyCode.Space && Input.GetKey(KeyCode.Space))) {
+                if(Time.time - lastRollTime > rollCooldown && IsGrounded(out _))
                     ballEnabled = true;
                 else {
                     inputBuffer = KeyCode.Space;
@@ -214,7 +215,7 @@ public class Player : Mover
         ballCollider.enabled = enable;
         if(!enable) {
             Visuals.instance.EndSpecial();
-            rigidBody.mass = normalMass;
+            rigidBody.mass = ageStats.masses[(int)state];
             if(IsGrounded(out _)) {
                 rigidBody.MoveRotation(Quaternion.LookRotation(Vector3.up));
                 accumulatedVel = Vector3.up * jumpSpeed;

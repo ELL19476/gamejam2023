@@ -46,8 +46,20 @@ public class Mover : MonoBehaviour, IDamagable
     public float Health { get => health; set {
         health = value;
         if(health <= 0) {
+            // AUDIO: Death
+            Audio.Play("Path/Zu/Deinem/Sound/Im/Resources/Ordner");
+            
             EnableRagdoll(true);
             enabled = false;
+            Instantiate(Resources.Load("Prefabs/Blood"), transform.position, Quaternion.identity);
+            var activeCinemachine = FindObjectOfType<Cinemachine.CinemachineBrain>().ActiveVirtualCamera;
+
+            if(activeCinemachine != null) {
+                activeCinemachine.Follow = null;
+            }
+
+            AnimationEvents.ShakeScreenEffect();
+            AnimationEvents.ReloadScene();
         }
     } }
     protected Action onLand;
@@ -84,6 +96,8 @@ public class Mover : MonoBehaviour, IDamagable
 
         Vector3 lowerCapsuleSphereCenter = transform.TransformPoint(capsule.center) - transform.up * (capsule.height / 2f - capsule.radius);
         Vector3 groundPos = lowerCapsuleSphereCenter - transform.up * (capsule.radius - 0.05f);
+
+        bool zero = accumulatedVel == Vector3.zero;
         Collider[] cols = Physics.OverlapSphere(lowerCapsuleSphereCenter, capsule.radius + 0.05f, 1 << 6);
         if(cols.Length > 0) {
             int i = 0;
@@ -136,7 +150,8 @@ public class Mover : MonoBehaviour, IDamagable
 
             }
             // Rotate towards the target
-            rigidBody.MoveRotation(Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation(direction), 3.5f * speed * Time.deltaTime));
+            if(direction != Vector3.zero)
+                rigidBody.MoveRotation(Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation(direction), 3.5f * speed * Time.deltaTime));
             
             lastVelocity = velocity;
             if(!grounded) {
@@ -168,7 +183,6 @@ public class Mover : MonoBehaviour, IDamagable
             // Rotate towards the target
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right * Mathf.Sign(target.x - transform.position.x)), 3.5f * speed * Time.deltaTime);
         }
-        Debug.Log("Velocity: " + velocity + " | " + accumulatedVel);
         rigidBody.velocity = velocity + accumulatedVel;
         return canMove;
     }

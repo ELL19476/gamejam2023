@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class AnimationEvents : MonoBehaviour
 {
@@ -19,34 +20,6 @@ public class AnimationEvents : MonoBehaviour
         foreach (var p in GetComponentsInChildren<ParticleSystem>()) {
             p.Play();
         }
-    }
-
-    public static void ScreenShake() {
-        instance.StartCoroutine(instance.ShakeScreen());
-    }
-
-    IEnumerator ShakeScreen() {
-        var t = Camera.main.transform;
-        
-        var duration = 0.2f;
-        var magnitude = 0.1f;
-
-        var elapsed = 0.0f;
-
-        var originalPos = t.localPosition;
-
-        while (elapsed < duration) {
-            var x = Random.Range(-1f, 1f) * magnitude;
-            var y = Random.Range(-1f, 1f) * magnitude;
-
-            t.localPosition = new Vector3(x, y, originalPos.z);
-
-            elapsed += Time.deltaTime;
-
-            yield return null;
-        }
-
-        t.localPosition = originalPos;
     }
 
     public void PlayNamedParticles(string name) {
@@ -67,10 +40,44 @@ public class AnimationEvents : MonoBehaviour
         }
     }
 
+    public void ShakeScreen() {
+        AnimationEvents.ShakeScreenEffect();
+    }
+
     public void StopParticles(string name) {
         var p = GetComponentsInChildren<ParticleSystem>().FirstOrDefault(x => x.name == name);
         if (p != null) {
             p.Stop();
         }
+    }
+
+    public static void ShakeScreenEffect() {
+        var cam = GameObject.Find("GameCam");
+        var ccam = cam.GetComponent<Cinemachine.CinemachineVirtualCamera>();
+        ccam.GetCinemachineComponent<Cinemachine.CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 1;
+        ccam.StartCoroutine(AnimationEvents.SetTimeout(0.5f, () => {
+            ccam.GetCinemachineComponent<Cinemachine.CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
+        }));
+    }
+
+    public static void ReloadScene() {
+        GameObject.Find("Darkening").GetComponent<Image>().StartCoroutine(Fade());
+    }
+
+    static IEnumerator SetTimeout(float time, System.Action callback) {
+        yield return new WaitForSeconds(time);
+        callback();
+    }
+
+    static IEnumerator Fade() {
+        var darkening = GameObject.Find("Darkening").GetComponent<Image>();
+        var color = darkening.color;
+        while (color.a < 1) {
+            color.a += Time.deltaTime * .5f;
+            darkening.color = color;
+            Debug.Log(color);
+            yield return null;
+        }
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 }
