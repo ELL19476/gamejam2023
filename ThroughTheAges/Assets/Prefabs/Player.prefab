@@ -3368,6 +3368,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6688298037039248629}
     m_Modifications:
+<<<<<<< HEAD
+=======
+    - target: {fileID: 3303032213134058820, guid: 39be7d1868ec038438d3717d830a8a5b, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3303032213649804556, guid: 39be7d1868ec038438d3717d830a8a5b, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3303032213866983642, guid: 39be7d1868ec038438d3717d830a8a5b, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3303032214008578048, guid: 39be7d1868ec038438d3717d830a8a5b, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3303032214008578053, guid: 39be7d1868ec038438d3717d830a8a5b, type: 3}
+      propertyPath: m_Name
+      value: LandSoft
+      objectReference: {fileID: 0}
+    - target: {fileID: 3303032214256138313, guid: 39be7d1868ec038438d3717d830a8a5b, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+>>>>>>> ed3648c626d99d80721b6cd2bb18ccf00160f4d2
     - target: {fileID: 3303032214258090980, guid: 39be7d1868ec038438d3717d830a8a5b, type: 3}
       propertyPath: m_RootOrder
       value: 0
