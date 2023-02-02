@@ -23,7 +23,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 376603184420714481}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.517, y: 0, z: 0.021}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -75,7 +75,8 @@ GameObject:
   - component: {fileID: 6599607267477234273}
   - component: {fileID: 7297966430612712690}
   - component: {fileID: 7843007954961010219}
-  m_Layer: 0
+  - component: {fileID: 669397397945815610}
+  m_Layer: 6
   m_Name: polySurface245
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,3 +148,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &669397397945815610
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3640006219825919386}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.47684747, y: 0.019040793, z: 0.6423886}
+  m_Center: {x: -1.084835, y: -0.104069844, z: 0.26067704}

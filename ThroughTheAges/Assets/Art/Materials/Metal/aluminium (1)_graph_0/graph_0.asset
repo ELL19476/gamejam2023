@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: graph_0
   m_EditorClassIdentifier: 
   AssetPath: Assets/Art/Materials/Metal/aluminium (1).sbsar
-  OutputPath: Assets/Art/Materials/Metal/aluminium (1)_graph_0
+  OutputPath: Assets\Art\Materials\Metal\aluminium (1)_graph_0
   RawData: {fileID: -244192453324840774, guid: f988183a555090b48b4d80fda2fef388, type: 3}
   Name: graph_0
   IsRoot: 1
   FlagedForDelete: 0
-  GUID: eda3a5b9-efb3-4f57-bea4-99d34f7d5baf
+  GUID: e747fbdf-ec63-4ad1-a377-bdad24ecb718
   Index: 0
   Input:
   - rid: 1000
