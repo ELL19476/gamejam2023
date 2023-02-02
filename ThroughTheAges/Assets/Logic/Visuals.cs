@@ -15,7 +15,7 @@ public class Visuals : MonoBehaviour
     Animator teenie;
     Animator granny;
 
-    Animator ActiveAnimator() {
+    public Animator ActiveAnimator() {
         switch (age) {
             case Age.Baby:
                 return baby;

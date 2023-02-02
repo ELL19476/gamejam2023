@@ -18,6 +18,11 @@ public class Enemy : Mover
         moveToTarget = true;
     }
     private void Update() {
-        moveToTarget = MoveTowards(moveToTarget?t:transform.position);
+        MoveTowards(t);
+    }
+
+    protected override bool CanMove(Vector3 normal)
+    {
+        return moveToTarget && base.CanMove(normal);
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -25069,15 +25069,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7424507524287867659, guid: 33bbcf1cf30f0e8459bfc8efefea8f60, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7424507524287867659, guid: 33bbcf1cf30f0e8459bfc8efefea8f60, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7424507524287867659, guid: 33bbcf1cf30f0e8459bfc8efefea8f60, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -6069589658678904292, guid: 33bbcf1cf30f0e8459bfc8efefea8f60, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -25117,15 +25117,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4799020013807254688, guid: 33bbcf1cf30f0e8459bfc8efefea8f60, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 75.66471
+      value: 75.92822
       objectReference: {fileID: 0}
     - target: {fileID: -4799020013807254688, guid: 33bbcf1cf30f0e8459bfc8efefea8f60, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -153.63445
+      value: -153.11249
       objectReference: {fileID: 0}
     - target: {fileID: -4799020013807254688, guid: 33bbcf1cf30f0e8459bfc8efefea8f60, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -153.60667
+      value: -153.06825
       objectReference: {fileID: 0}
     - target: {fileID: -4218934067600277422, guid: 33bbcf1cf30f0e8459bfc8efefea8f60, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -25197,11 +25197,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1885863499751196329, guid: 33bbcf1cf30f0e8459bfc8efefea8f60, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 105.5134
+      value: 105.513374
       objectReference: {fileID: 0}
     - target: {fileID: 1885863499751196329, guid: 33bbcf1cf30f0e8459bfc8efefea8f60, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -175.81754
+      value: -175.81757
       objectReference: {fileID: 0}
     - target: {fileID: 2089496048146268087, guid: 33bbcf1cf30f0e8459bfc8efefea8f60, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -30954,7 +30954,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2098566420}
-  m_LocalRotation: {x: 0.09089129, y: 0.9077891, z: -0.26271415, w: 0.31406865}
+  m_LocalRotation: {x: 0.0908915, y: 0.90778905, z: -0.26271403, w: 0.31406862}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

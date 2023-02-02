@@ -22,8 +22,8 @@ public class Mover : MonoBehaviour, IDamagable
     protected float jumpSpeed = 1f;
     [SerializeField, Range(0, 100)]
     protected float airDrag = 0.9f;
-    [SerializeField]
-    protected float maxAirSpeed;
+    [SerializeField, Range(0, 1)]
+    protected float maxAirSpeedFraction;
     [SerializeField, Range(0, 1)]
     protected float airControl;
     [SerializeField, Range(0, 10)]
@@ -35,6 +35,7 @@ public class Mover : MonoBehaviour, IDamagable
     bool grounded = false;
     Vector3 lastColDir = Vector3.up;
 
+    [Header("Damagable")]
     // HEALTH
 [   SerializeField]
     protected float health;
@@ -140,11 +141,11 @@ public class Mover : MonoBehaviour, IDamagable
             // Momentum
             lastVelocity -= lastVelocity * Mathf.Clamp01(airDrag * Time.deltaTime);
             velocity = lastVelocity;
-            velocity = Vector3.ClampMagnitude(velocity, Mathf.Abs(maxAirSpeed));
+            velocity = Vector3.ClampMagnitude(velocity, Mathf.Abs(speed * maxAirSpeedFraction));
             if(CanMove(Vector3.up)) 
                 velocity += (target - transform.position).normalized * speed * airControl;
 
-            velocity = Vector3.ClampMagnitude(velocity, Mathf.Abs(maxAirSpeed));
+            velocity = Vector3.ClampMagnitude(velocity, Mathf.Abs(speed * maxAirSpeedFraction));
             AddGravity();
             canMove = false;
             // Rotate towards the target

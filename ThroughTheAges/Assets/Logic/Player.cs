@@ -44,14 +44,8 @@ public class Player : Mover
                 return;
 
             _state = value;
-            gravityScale = originalGravity;
-            fastFalling = false;
-            slowJump = false;
-            ballEnabled = false;
-            inputBuffer = KeyCode.None;
-
-            Visuals.instance.EndSpecial();
-            Visuals.instance.age = (Visuals.Age)value;
+            
+            ChangeState();
         }
     }
     PlayerState _state;
@@ -98,6 +92,9 @@ public class Player : Mover
     // Keep track of view direction
     int dir = 1;
 
+    // AgeStats
+    public AgeStats ageStats;
+
     protected override void Start() {
         base.Start();
         ballCollider = GetComponent<SphereCollider>();
@@ -108,6 +105,14 @@ public class Player : Mover
         attackCollider.enabled = false;
 
         originalGravity = gravityScale;
+
+        ChangeState();
+        // TMP
+        // IEnumerator a() {
+        //     yield return new WaitForSeconds(3);
+        //     EnableRagdoll(true);
+        // }
+        // StartCoroutine(a());
     }
 
     private void Update() {
@@ -247,19 +252,31 @@ public class Player : Mover
         attack = true;
         // 2. Hitbox Query
         Collider[] cols = Physics.OverlapBox(transform.TransformPoint(attackCollider.center), attackCollider.size * 0.5f, transform.rotation);
-        // 3. Add Force and Damage to hit objects
         foreach(Collider col in cols) {
-            if(col.gameObject == gameObject || col.transform.parent == transform)
+            Debug.Log(col.gameObject.name);
+            if(col.gameObject == gameObject || col.transform.root == transform)
                 continue;
             Rigidbody rb = col.GetComponent<Rigidbody>();
             IDamagable health = col.GetComponent<IDamagable>();
-            if(health != null) {
-                health.Health -= attackDamage;
-            }
+
             IEnumerator Knockback() {
-                yield return new WaitForSeconds(attackTime);
-                if(rb != null && rb.isKinematic == false) {
-                    rb.AddForce(transform.TransformDirection(localAttackForce), ForceMode.Impulse);
+                yield return new WaitForSeconds(attackTime * 0.2f);
+                // 3. Damage
+                if(health != null) {
+                    health.Health -= attackDamage;
+                }
+                // 4. Knockback
+                var ragdollCols = Physics.OverlapBox(transform.TransformPoint(attackCollider.center), attackCollider.size * 0.5f, transform.rotation);
+                List<Rigidbody> ragdollRbs = new List<Rigidbody>();
+                foreach(Collider rc in ragdollCols) {
+                    if(rc.transform.root == col.transform && rc.TryGetComponent(out Rigidbody rbr)) {
+                        ragdollRbs.Add(rbr);
+                    }
+                }
+                // Add force to ragdoll
+                foreach(Rigidbody rbr in ragdollRbs) {
+                    Debug.Log(rbr.gameObject.name);
+                    rbr.AddForce(transform.TransformDirection(localAttackForce), ForceMode.Impulse);
                 }
             }
             StartCoroutine(Knockback());
@@ -271,6 +288,29 @@ public class Player : Mover
         StartCoroutine(AttackEnd());
     }
 
+    protected void ChangeState() {
+        if((isJumping && !afterApex) || attack || ballEnabled)
+            Visuals.instance.EndSpecial();
+
+        gravityScale = originalGravity;
+        fastFalling = false;
+        slowJump = false;
+        ballEnabled = false;
+        inputBuffer = KeyCode.None; 
+
+        // Change speed
+        speed = ageStats.speeds[(int)_state];
+        // Change collider
+        {
+            capsule.height = ageStats.colliders[(int)_state].height;
+            capsule.radius = ageStats.colliders[(int)_state].radius;
+            capsule.center = ageStats.colliders[(int)_state].center;
+            capsule.direction = ageStats.colliders[(int)_state].direction;
+        }
+
+        Visuals.instance.age = (Visuals.Age)_state;
+    }
+
     protected override bool CanMove(Vector3 normal)
     {
         return !attack && Input.GetAxisRaw("Horizontal") != 0;
@@ -279,6 +319,14 @@ public class Player : Mover
     {
         if(ballCollider)
             ballCollider.enabled = !enable;
+        
+        GetComponentsInChildren<Animator>().ToList().ForEach(a => {
+            a.enabled = !enable;
+            a.gameObject.SetActive(!enable);
+        });
+        if(enable)
+            Visuals.instance.ActiveAnimator().gameObject.SetActive(true);
+
         base.EnableRagdoll(enable);
     }
 }
