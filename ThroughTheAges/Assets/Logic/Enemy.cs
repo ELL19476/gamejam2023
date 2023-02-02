@@ -60,7 +60,7 @@ public class Enemy : Mover
         // AUDIO: Attack
         
         yield return new WaitForSeconds(attackInterval + Random.Range(-attackIntervalRandom, attackIntervalRandom));
-        if(Vector3.Distance(transform.position, GameManager.player.transform.position) > shootRange) {
+        if(Vector3.Distance(transform.position, GameManager.player.transform.position) < shootRange) {
             moveToTarget = false;
             var anim = GetComponentInChildren<Animator>();
             anim.SetTrigger("attack");
