@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 777f4525052334f42bcfafb3fa8f98a8
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: dda12f74ff9116a42b23482252b2c482, type: 3}
+  _instancesCopy:
+  - {fileID: 11400000, guid: 3f9bb20c9999ce449b27622f0db3847e, type: 2}
+  _fileAsset: {instanceID: 0}
+  _assetPath: Assets/Art/Materials/Stone/marblesubstance002.sbsar
