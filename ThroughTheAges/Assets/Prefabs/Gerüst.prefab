@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3943007860256661843}
   - component: {fileID: 1251041423570703769}
   m_Layer: 6
-  m_Name: "Ger\xFCst"
+  m_Name: "Geru\u0308st"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -33,7 +33,6 @@ public class Enemy : Mover
     }
     private void Update()
     {
-        
         MoveTowards(transform.position + direction);
     }
 
@@ -49,8 +48,7 @@ public class Enemy : Mover
         moveToTarget = false;
         var anim = GetComponentInChildren<Animator>();
         anim.SetTrigger("attack");
-        yield return new WaitForSeconds(1f);
-        moveToTarget = true;
+        yield return new WaitForSeconds(.3f);
         var obstacle = Instantiate(obstaclePrefab, obstacleSpawnPoint.transform.position, transform.rotation);
     }
 
