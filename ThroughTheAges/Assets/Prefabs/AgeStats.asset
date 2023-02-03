@@ -18,7 +18,7 @@ MonoBehaviour:
   - {fileID: 3422833300652849800, guid: 6a99e1df8bb6e4a759d60069df823bfc, type: 3}
   speeds:
   - 3
-  - 12
+  - 9
   - 4
   masses:
   - 3.5

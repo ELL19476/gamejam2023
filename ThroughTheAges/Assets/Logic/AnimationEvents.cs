@@ -80,6 +80,14 @@ public class AnimationEvents : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 
+    public void LoadScene(int scene) {
+        if(scene == -1) 
+            scene = PlayerPrefs.GetInt("LastScene", 2);
+        StartCoroutine(FadeTo(scene));
+        if(scene > 2) {
+            PlayerPrefs.SetInt("LastScene", scene);
+        }
+    }
     static IEnumerator FadeTo(int scene) {
         var darkening = GameObject.Find("Darkening").GetComponent<Image>();
         var color = darkening.color;
@@ -108,5 +116,9 @@ public class AnimationEvents : MonoBehaviour
 
     public void StartMyCoroutine(string name) {
         StartCoroutine(name);
+    }
+
+    private void OnDestroy() {
+        PlayerPrefs.Save();
     }
 }
