@@ -1,5 +1,33 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8936826034749891262
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
+  m_Name: ColorAdjustments
+  m_EditorClassIdentifier: 
+  active: 1
+  postExposure:
+    m_OverrideState: 1
+    m_Value: 0.56
+  contrast:
+    m_OverrideState: 0
+    m_Value: 72
+  colorFilter:
+    m_OverrideState: 1
+    m_Value: {r: 0.92225677, g: 0.91886795, b: 1, a: 1}
+  hueShift:
+    m_OverrideState: 0
+    m_Value: 0
+  saturation:
+    m_OverrideState: 1
+    m_Value: 8
 --- !u!114 &-5050703132025976294
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -109,6 +137,7 @@ MonoBehaviour:
   - {fileID: 5071819329616126164}
   - {fileID: -1795659128562840542}
   - {fileID: 6215173604003162582}
+  - {fileID: -8936826034749891262}
 --- !u!114 &4215928855390045600
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -123,8 +152,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   threshold:
-    m_OverrideState: 0
-    m_Value: 0.9
+    m_OverrideState: 1
+    m_Value: 2.36
   intensity:
     m_OverrideState: 1
     m_Value: 0.56
@@ -132,7 +161,7 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0.7
   clamp:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 65472
   tint:
     m_OverrideState: 0
@@ -191,7 +220,7 @@ MonoBehaviour:
   master:
     m_OverrideState: 0
     m_Value:
-      <length>k__BackingField: 2
+      <length>k__BackingField: 3
       m_Loop: 0
       m_ZeroValue: 0
       m_Range: 1
@@ -208,7 +237,16 @@ MonoBehaviour:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 1
+          time: 0.4371664
+          value: 0.5561224
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.8568656
           value: 1
           inSlope: 1
           outSlope: 1
