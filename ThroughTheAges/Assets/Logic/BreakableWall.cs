@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BreakableWall : MonoBehaviour
 {
+    bool broke = false;
+    
     GameObject pieceParent;
     Rigidbody[] rbs;
 
@@ -21,6 +23,11 @@ public class BreakableWall : MonoBehaviour
 
     public void Break(Vector3 position, float force)
     {
+        if(!broke) {
+            broke = true;
+            Audio.PlayLoud("GameJam23SL/WallBrake");
+        }
+        
         pieceParent.SetActive(true);
         GetComponent<MeshRenderer>().enabled = false;
         GetComponent<Collider>().enabled = false;

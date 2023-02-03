@@ -7,6 +7,8 @@ public class BouncePad : MonoBehaviour
     [SerializeField] float force = 2f;
     [SerializeField] float minVelocity = 7.5f;
     private void OnCollisionEnter(Collision other) {
+        Audio.PlayRandom("GameJam23SL/BouncePad/BoingBncpad");
+        
         Vector3 f = transform.up * 
             Mathf.Max(force * (other.relativeVelocity.magnitude) * (other.rigidbody? 1f / other.rigidbody.mass : 1),
                 minVelocity

@@ -19,8 +19,10 @@ public class Visuals : MonoBehaviour
     public Action winAction;
 
 
-    public Animator ActiveAnimator() {
-        switch (age) {
+    public Animator ActiveAnimator()
+    {
+        switch (age)
+        {
             case Age.Baby:
                 return baby;
             case Age.Teenie:
@@ -41,14 +43,15 @@ public class Visuals : MonoBehaviour
         {
             if (_age == value) return;
 
+            Audio.Play("GameJam23SL/AgeMorph");
             // AUDIO: Change
 
             GameObject.Find("Change").GetComponent<ParticleSystem>().Play(true);
-            
+
             Hide(ActiveAnimator());
-            
+
             _age = value;
-            
+
             Show(ActiveAnimator());
         }
     }
@@ -87,24 +90,27 @@ public class Visuals : MonoBehaviour
         {
             a.enabled = false;
         }
-        
+
         Show(ActiveAnimator());
     }
 
-    public void Land(bool hard) {
-        // AUDIO: Land
-        
-        if(hard)
-        GameObject.Find("LandHard").GetComponent<ParticleSystem>().Play();
-        else
-        GameObject.Find("LandSoft").GetComponent<ParticleSystem>().Play();
+    public void Land(bool hard)
+    {
+        Audio.PlayLoud("GameJam23SL/Landing");
 
-        foreach (var a in GetComponentsInChildren<Animator>(true)) {
+        if (hard)
+            GameObject.Find("LandHard").GetComponent<ParticleSystem>().Play();
+        else
+            GameObject.Find("LandSoft").GetComponent<ParticleSystem>().Play();
+
+        foreach (var a in GetComponentsInChildren<Animator>(true))
+        {
             a.SetTrigger("land");
         }
     }
 
-    public void SetSpeed(float speed) {
+    public void SetSpeed(float speed)
+    {
 
         // switch (age) {
         //     case Age.Baby:
@@ -118,41 +124,49 @@ public class Visuals : MonoBehaviour
         //         break;
         // }
 
-        foreach (var a in GetComponentsInChildren<Animator>(true)) {
+        foreach (var a in GetComponentsInChildren<Animator>(true))
+        {
             a.SetFloat("speed", speed);
             a.SetBool("running", speed > Mathf.Epsilon);
         }
     }
 
-    public void Special() {
-        foreach (var a in GetComponentsInChildren<Animator>(true)) {
-            switch (age) {
+    public void Special()
+    {
+        foreach (var a in GetComponentsInChildren<Animator>(true))
+        {
+            switch (age)
+            {
                 case Age.Baby:
                     a.GetComponent<AnimationEvents>()?.StartParticles("Roll");
                     a.SetTrigger("roll");
 
-                    // AUDIO: Roll
+                    Audio.Play("GameJam23SL/JumpWhoosh");
                     break;
                 case Age.Teenie:
                     a.SetTrigger("jumpStart");
 
-                    // AUDIO: Jump
+                    Audio.Play("GameJam23SL/JumpWhoosh");
                     break;
                 case Age.Granny:
                     a.SetTrigger("attack");
 
-                    // AUDIO: Attack
+                    Audio.Play("GameJam23SL/PunchHits/RolatorMetallPunch1");
+
                     break;
             }
         }
     }
-    public void EndSpecial() {
-        foreach (var a in GetComponentsInChildren<Animator>(true)) {
-            switch (age) {
+    public void EndSpecial()
+    {
+        foreach (var a in GetComponentsInChildren<Animator>(true))
+        {
+            switch (age)
+            {
                 case Age.Baby:
                     a.SetTrigger("endRoll");
 
-                    // AUDIO: End Roll
+                    Audio.PlayLoud("GameJam23SL/JumpWhoosh");
                     break;
                 case Age.Teenie:
                     a.SetTrigger("jumpApex");
@@ -164,37 +178,47 @@ public class Visuals : MonoBehaviour
         }
     }
 
-    void Hide(Animator anim) {
-        foreach (Transform child in anim.transform) {
-            if (child.GetComponent<MaxScale>() != null) {
+    void Hide(Animator anim)
+    {
+        foreach (Transform child in anim.transform)
+        {
+            if (child.GetComponent<MaxScale>() != null)
+            {
                 StartCoroutine(ScaleDown(child));
             }
 
-            if (child.GetComponent<Renderer>() != null) {
+            if (child.GetComponent<Renderer>() != null)
+            {
                 StartCoroutine(FadeEmission(child.GetComponent<Renderer>().material));
             }
         }
     }
 
-    void Show(Animator anim) {
-        foreach (Transform child in anim.transform) {
-            if (child.GetComponent<MaxScale>() != null) {
+    void Show(Animator anim)
+    {
+        foreach (Transform child in anim.transform)
+        {
+            if (child.GetComponent<MaxScale>() != null)
+            {
                 StartCoroutine(ScaleUp(child));
             }
 
-            if (child.GetComponent<Renderer>() != null) {
+            if (child.GetComponent<Renderer>() != null)
+            {
                 StartCoroutine(UnFadeEmission(child.GetComponent<Renderer>().material));
             }
         }
     }
 
-    IEnumerator FadeEmission(Material mat) {
+    IEnumerator FadeEmission(Material mat)
+    {
         var from = -0f;
         var to = 10f;
         var dur = .4f;
 
         var t = 0f;
-        while (t < dur) {
+        while (t < dur)
+        {
             t += Time.deltaTime;
             var val = Mathf.Lerp(from, to, t / dur);
             mat.SetColor("_EmissionColor", new Color(val, val, val, 1f));
@@ -202,13 +226,15 @@ public class Visuals : MonoBehaviour
         }
     }
 
-    IEnumerator ScaleDown(Transform armature) {
+    IEnumerator ScaleDown(Transform armature)
+    {
         var from = armature.GetComponent<MaxScale>().maxScale;
         var to = 0f;
         var dur = .4f;
 
         var t = 0f;
-        while (t < dur) {
+        while (t < dur)
+        {
             t += Time.deltaTime;
             var val = Mathf.Lerp(from, to, t / dur);
             armature.localScale = new Vector3(val, val, val);
@@ -218,13 +244,15 @@ public class Visuals : MonoBehaviour
         armature.GetComponentInParent<Animator>().enabled = false;
     }
 
-    IEnumerator UnFadeEmission(Material mat) {
+    IEnumerator UnFadeEmission(Material mat)
+    {
         var from = 10f;
         var to = -0f;
         var dur = .4f;
 
         var t = 0f;
-        while (t < dur) {
+        while (t < dur)
+        {
             t += Time.deltaTime;
             var val = Mathf.Lerp(from, to, t / dur);
             mat.SetColor("_EmissionColor", new Color(val, val, val, 1f));
@@ -232,16 +260,18 @@ public class Visuals : MonoBehaviour
         }
     }
 
-    IEnumerator ScaleUp(Transform armature) {
+    IEnumerator ScaleUp(Transform armature)
+    {
         armature.GetComponentInParent<Animator>().enabled = true;
-        
+
         var to = armature.GetComponent<MaxScale>().maxScale;
-        
+
         var from = 0f;
         var dur = .4f;
 
         var t = 0f;
-        while (t < dur) {
+        while (t < dur)
+        {
             t += Time.deltaTime;
             var val = Mathf.Lerp(from, to, t / dur);
             armature.localScale = new Vector3(val, val, val);
@@ -260,15 +290,19 @@ public class Visuals : MonoBehaviour
         winAction?.Invoke();
 
         // AUDIO: Win
+        Audio.PlayLoud("GameJam23SL/HeavenAscend");
+        
     }
 
-    IEnumerator Fly() {
+    IEnumerator Fly()
+    {
         var start = transform.position;
         var height = start + Vector3.up * 10f;
 
         var t = 0f;
 
-        while (t < 1f) {
+        while (t < 1f)
+        {
             t += Time.deltaTime * .1f;
             transform.position = Vector3.Lerp(start, height, t);
             yield return null;

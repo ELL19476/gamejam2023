@@ -47,7 +47,8 @@ public class Mover : MonoBehaviour, IDamagable
     public float Health { get => health; set {
         health = value;
         if(health <= 0) {
-            // AUDIO: Death
+            Audio.PlayLoud("GameJam23SL/BloodyStab");
+            
             onDie?.Invoke();
             Audio.Play("Path/Zu/Deinem/Sound/Im/Resources/Ordner");
             

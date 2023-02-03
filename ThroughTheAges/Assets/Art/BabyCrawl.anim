@@ -28514,3 +28514,17 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.20833333
+    functionName: Play
+    data: GameJam23SL/BabySounds/BabyFootstep
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.625
+    functionName: Play
+    data: GameJam23SL/BabySounds/BabyFootstep
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

@@ -46614,16 +46614,23 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.041666668
+    functionName: PlayLoud
+    data: GameJam23SL\GrandpaSounds/rolator
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.25
-    functionName: Play
-    data: Footsteps(Teen&Grandy)/FootStep2
+    functionName: PlayRandomSilent
+    data: GameJam23SL/Footsteps(Teen&Grandy)/FootStep
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 2.625
-    functionName: Play
-    data: Footsteps(Teen&Grandy)/FootStep2
+    functionName: PlayRandomSilent
+    data: GameJam23SL/Footsteps(Teen&Grandy)/FootStep
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
