@@ -130,6 +130,10 @@ public class Player : Mover
             if(!isJumping)
                 Visuals.instance.Land(fastFalling);
         };
+        Visuals.instance.winAction += () => {
+            StopAllCoroutines();
+            enabled = false;
+        };
         // TMP
         // IEnumerator a() {
         //     yield return new WaitForSeconds(3);

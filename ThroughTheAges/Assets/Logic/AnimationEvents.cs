@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
+using System;
 
 public class AnimationEvents : MonoBehaviour
 {
@@ -84,9 +85,6 @@ public class AnimationEvents : MonoBehaviour
         if(scene == -1) 
             scene = PlayerPrefs.GetInt("LastScene", 2);
         StartCoroutine(FadeTo(scene));
-        if(scene > 2) {
-            PlayerPrefs.SetInt("LastScene", scene);
-        }
     }
     static IEnumerator FadeTo(int scene) {
         var darkening = GameObject.Find("Darkening").GetComponent<Image>();
@@ -96,7 +94,14 @@ public class AnimationEvents : MonoBehaviour
             darkening.color = color;
             yield return null;
         }
-        UnityEngine.SceneManagement.SceneManager.LoadScene(scene);
+        if(scene < 0 && scene >= UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings) {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(scene);
+            if(scene > 2) {
+                PlayerPrefs.SetInt("LastScene", scene);
+            }
+        } else {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        }
     }
 
     IEnumerator FadeQuit() {
