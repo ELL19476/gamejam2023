@@ -79,4 +79,34 @@ public class AnimationEvents : MonoBehaviour
         }
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
+
+    static IEnumerator FadeTo(int scene) {
+        var darkening = GameObject.Find("Darkening").GetComponent<Image>();
+        var color = darkening.color;
+        while (color.a < 1) {
+            color.a += Time.deltaTime * .5f;
+            darkening.color = color;
+            yield return null;
+        }
+        UnityEngine.SceneManagement.SceneManager.LoadScene(scene);
+    }
+
+    IEnumerator FadeQuit() {
+        var darkening = GameObject.Find("Darkening").GetComponent<Image>();
+        var color = darkening.color;
+        while (color.a < 1) {
+            color.a += Time.deltaTime * .5f;
+            darkening.color = color;
+            yield return null;
+        }
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #else
+        Application.Quit();
+        #endif
+    }
+
+    public void StartMyCoroutine(string name) {
+        StartCoroutine(name);
+    }
 }
