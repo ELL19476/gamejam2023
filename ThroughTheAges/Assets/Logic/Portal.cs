@@ -7,6 +7,7 @@ public class Portal : MonoBehaviour
     public static System.Action<Player.PlayerState> enteredPortal;
     
     public Player.PlayerState state;
+    public Vector3 boost = Vector3.zero;
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out Player player))
@@ -16,6 +17,9 @@ public class Portal : MonoBehaviour
             GetComponent<Collider>().enabled = false;
             transform.GetChild(0).gameObject.SetActive(true);
             StartCoroutine(ScaleDown(transform.GetChild(1)));
+
+            if(boost != Vector3.zero)
+                player.SetVelocity(boost);
         }
     }
 

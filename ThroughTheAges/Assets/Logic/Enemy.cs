@@ -7,7 +7,7 @@ using UnityEngine;
 public class Enemy : Mover
 {
     public float shootRange = 5f;
-    public Transform position1, position2;
+    public Vector3 direction;
 
     Vector3 t = Vector3.zero;
     bool moveToTarget = false;
@@ -24,10 +24,6 @@ public class Enemy : Mover
     protected override void Start()
     {
         base.Start();
-
-        SetTarget(position2.position);
-
-        StartCoroutine(Attack());
     }
 
     public void SetTarget(Vector3 target)
@@ -37,17 +33,8 @@ public class Enemy : Mover
     }
     private void Update()
     {
-        if (Vector3.Distance(transform.position.IgnoreY(), position1.position.IgnoreY()) < range)
-        {
-            SetTarget(position2.position);
-        }
-        // if reached position 2, move to position 1
-        else if (Vector3.Distance(transform.position.IgnoreY(), position2.position.IgnoreY()) < range)
-        {
-            SetTarget(position1.position);
-        }
         
-        MoveTowards(t);
+        MoveTowards(transform.position + direction);
     }
 
     protected override bool CanMove(Vector3 normal)
@@ -59,17 +46,12 @@ public class Enemy : Mover
     {
         // AUDIO: Attack
         
-        yield return new WaitForSeconds(attackInterval + UnityEngine.Random.Range(-attackIntervalRandom, attackIntervalRandom));
-        if(Vector3.Distance(transform.position, GameManager.player.transform.position) < shootRange) {
-            moveToTarget = false;
-            var anim = GetComponentInChildren<Animator>();
-            anim.SetTrigger("attack");
-            yield return new WaitForSeconds(1f);
-            moveToTarget = true;
-            var obstacle = Instantiate(obstaclePrefab, obstacleSpawnPoint.transform.position, transform.rotation);
-        }
-        StartCoroutine(Attack());
-        
+        moveToTarget = false;
+        var anim = GetComponentInChildren<Animator>();
+        anim.SetTrigger("attack");
+        yield return new WaitForSeconds(1f);
+        moveToTarget = true;
+        var obstacle = Instantiate(obstaclePrefab, obstacleSpawnPoint.transform.position, transform.rotation);
     }
 
     protected override void EnableRagdoll(bool enable)
@@ -82,6 +64,13 @@ public class Enemy : Mover
             Visuals.instance.ActiveAnimator().gameObject.SetActive(true);
 
         base.EnableRagdoll(enable);
+    }
+    public void AttackTrigger() {
+        Debug.Log("AttackTrigger");
+        StartCoroutine(Attack());
+    }
+    public void MoveTrigger() {
+        moveToTarget = true;
     }
 }
 

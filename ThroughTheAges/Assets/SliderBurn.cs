@@ -30,15 +30,14 @@ public class SliderBurn : MonoBehaviour
         }
         to = 0;
         for(int i = 0; i < states.Count; i++) {
-            marks[i] = to;
+            marks[i] = 1 - to;
             to += states[i].time / totalTime;
         }
 
         GameManager.player.onStateSwitch += () => {
             iconImage.sprite = icons[(int)GameManager.player.state];
             sliderAnim.SetTrigger("transition");
-            value = 1 - marks[(int)GameManager.player.state];
-            Debug.Log((int)GameManager.player.state);
+            value = marks[(int)GameManager.player.state];
         };
 
         Visuals.instance.winAction += () => {
@@ -53,5 +52,18 @@ public class SliderBurn : MonoBehaviour
         transform.localScale = new Vector3(value, transform.localScale.y, transform.localScale.z);
 
         iconImage.transform.position = iconTransform.position;
+
+        for(int i = 0; i < marks.Length; i++) {
+            if(marks[i] > value) {
+                if((int)GameManager.player.state < i) {
+                    GameManager.player.state = (Player.PlayerState)i;
+                    Debug.Log("State: " + GameManager.player.state);
+                }
+            }
+        }
+
+        if(value == 0) {
+            GameManager.player.Health = 0;
+        }
     }
 }
