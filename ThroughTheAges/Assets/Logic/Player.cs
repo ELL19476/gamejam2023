@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,11 @@ public class StateSwitch {
 public class Player : Mover
 {
 
+    [Header("Life")]
     [SerializeField]
-    List<StateSwitch> stateSwitches = new List<StateSwitch>();
+    public List<StateSwitch> stateSwitches = new List<StateSwitch>();
+    [SerializeField]
+    float transitionTime = 0.5f;
 
     [Header("Player Movement")]
     [SerializeField, Range(0, 10)]
@@ -55,6 +59,7 @@ public class Player : Mover
                 return;
 
             _state = value;
+            onStateSwitch?.Invoke();
             
             ChangeState();
         }
@@ -108,8 +113,9 @@ public class Player : Mover
     // AgeStats
     public AgeStats ageStats;
 
+    public Action onStateSwitch;
+
     protected override void Start() {
-        StartCoroutine(PlayStates());
         
         base.Start();
         ballCollider = GetComponent<SphereCollider>();
@@ -120,7 +126,6 @@ public class Player : Mover
 
         originalGravity = gravityScale;
 
-        ChangeState();
         onLand += () => {
             if(!isJumping)
                 Visuals.instance.Land(fastFalling);
@@ -131,14 +136,18 @@ public class Player : Mover
         //     EnableRagdoll(true);
         // }
         // StartCoroutine(a());
+        ChangeState();
+        StartCoroutine(PlayStates());
     }
 
     IEnumerator PlayStates() {
         foreach (var s in stateSwitches)
         {
-            yield return new WaitForSeconds(s.time);
             state = s.state;
+            yield return new WaitForSeconds(s.time);
         }
+        // die as an old man
+        Health = 0;
     }
 
     private void Update() {
@@ -156,12 +165,12 @@ public class Player : Mover
 
     protected void DoActions(KeyCode bufferedInput) {
         // Change state
-        if(Input.GetKeyDown(KeyCode.LeftShift) || bufferedInput == KeyCode.LeftShift) {
-            state = (PlayerState)(((int)state + 1) % 3);
-            if(bufferedInput == KeyCode.LeftShift) {
-                inputBuffer = KeyCode.None;
-            }
-        }
+        // if(Input.GetKeyDown(KeyCode.LeftShift) || bufferedInput == KeyCode.LeftShift) {
+        //     state = (PlayerState)(((int)state + 1) % 3);
+        //     if(bufferedInput == KeyCode.LeftShift) {
+        //         inputBuffer = KeyCode.None;
+        //     }
+        // }
 
         float h = Input.GetAxisRaw("Horizontal");
         if(!ballEnabled && h != 0) {
@@ -341,12 +350,15 @@ public class Player : Mover
         // Change speed
         speed = ageStats.speeds[(int)_state];
         // Change collider
+        IEnumerator Transition()
         {
+            yield return new WaitForSeconds(transitionTime);
             capsule.height = ageStats.colliders[(int)_state].height;
             capsule.radius = ageStats.colliders[(int)_state].radius;
             capsule.center = ageStats.colliders[(int)_state].center;
             capsule.direction = ageStats.colliders[(int)_state].direction;
         }
+        StartCoroutine(Transition());
         // Change masses
         rigidBody.mass = ageStats.masses[(int)_state];
 
