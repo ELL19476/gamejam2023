@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,9 @@ public class Visuals : MonoBehaviour
     Animator baby;
     Animator teenie;
     Animator granny;
+
+    public Action winAction;
+
 
     public Animator ActiveAnimator() {
         switch (age) {
@@ -253,6 +257,7 @@ public class Visuals : MonoBehaviour
     {
         ActiveAnimator().enabled = false;
         StartCoroutine(Fly());
+        winAction?.Invoke();
 
         // AUDIO: Win
     }

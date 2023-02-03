@@ -40,6 +40,10 @@ public class SliderBurn : MonoBehaviour
             value = 1 - marks[(int)GameManager.player.state];
             Debug.Log((int)GameManager.player.state);
         };
+
+        Visuals.instance.winAction += () => {
+            enabled = false;
+        };
     }
     void LateUpdate()
     {

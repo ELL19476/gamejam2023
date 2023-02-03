@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using System;
 
 public class WinHandler : MonoBehaviour
 {
+    public float wintime;
     CinemachineVirtualCamera vcam;
 
     private void Awake()
@@ -26,6 +28,12 @@ public class WinHandler : MonoBehaviour
             anim.SetTrigger("win");
 
             GameObject.Find("Bloom").GetComponent<Animator>().enabled = true;
+
+            IEnumerator Wait() {
+                yield return new WaitForSeconds(wintime);
+                AnimationEvents.instance.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex + 1);
+            }
+            StartCoroutine(Wait());
         }
     }
 }
