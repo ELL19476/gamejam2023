@@ -141,17 +141,6 @@ public class Player : Mover
         // }
         // StartCoroutine(a());
         ChangeState();
-        StartCoroutine(PlayStates());
-    }
-
-    IEnumerator PlayStates() {
-        foreach (var s in stateSwitches)
-        {
-            state = s.state;
-            yield return new WaitForSeconds(s.time);
-        }
-        // die as an old man
-        Health = 0;
     }
 
     private void Update() {
