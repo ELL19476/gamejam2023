@@ -82,8 +82,9 @@ public class AnimationEvents : MonoBehaviour
     }
 
     public void LoadScene(int scene) {
-        if(scene == -1) 
+        if(scene < 0) 
             scene = PlayerPrefs.GetInt("LastScene", 2);
+
         StartCoroutine(FadeTo(scene));
     }
     static IEnumerator FadeTo(int scene) {
@@ -94,7 +95,8 @@ public class AnimationEvents : MonoBehaviour
             darkening.color = color;
             yield return null;
         }
-        if(scene < 0 && scene >= UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings) {
+        Debug.Log(UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings);
+        if(scene >= 0 && scene < UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings) {
             UnityEngine.SceneManagement.SceneManager.LoadScene(scene);
             if(scene > 2) {
                 PlayerPrefs.SetInt("LastScene", scene);
