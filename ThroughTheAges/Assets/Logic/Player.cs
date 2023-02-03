@@ -158,12 +158,12 @@ public class Player : Mover
 
     protected void DoActions(KeyCode bufferedInput) {
         // Change state
-        if(Input.GetKeyDown(KeyCode.LeftShift) || bufferedInput == KeyCode.LeftShift) {
-            state = (PlayerState)(((int)state + 1) % 3);
-            if(bufferedInput == KeyCode.LeftShift) {
-                inputBuffer = KeyCode.None;
-            }
-        }
+        // if(Input.GetKeyDown(KeyCode.LeftShift) || bufferedInput == KeyCode.LeftShift) {
+        //     state = (PlayerState)(((int)state + 1) % 3);
+        //     if(bufferedInput == KeyCode.LeftShift) {
+        //         inputBuffer = KeyCode.None;
+        //     }
+        // }
 
         float h = Input.GetAxisRaw("Horizontal");
         if(!ballEnabled && h != 0) {
